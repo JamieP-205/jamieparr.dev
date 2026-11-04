@@ -13,6 +13,7 @@
   "type": "module",
   "devDependencies": {
     "@cloudflare/vite-plugin": "^2.0.0-beta.v.0",
+    "@sveltia/cms": "^0.258.1",
     "cf": "^1.0.0-beta.27",
     "gray-matter": "^4.0.3",
     "marked": "^18.1.3",

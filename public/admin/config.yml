@@ -1,12 +1,12 @@
-# Sveltia CMS: edits the files in /content and commits them to GitHub.
-# Each save triggers a rebuild, so changes go live in about a minute.
+# Sveltia CMS: edits the files in /content.
+# No GitHub repo is used. Open /admin locally (npx cf dev) in Chrome or Edge,
+# choose "Work with Local Repository", pick this folder, edit, then deploy.
 backend:
   name: github
   repo: JamieP-205/jamie-parr-site
   branch: main
 media_folder: public/uploads
 public_folder: /uploads
-site_url: /
 collections:
   - name: projects
     label: Projects
