@@ -88,6 +88,8 @@ main { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
   padding: 0.4rem 0.75rem; border-radius: 999px; margin-bottom: 1.75rem;
 }
 .status__led { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); flex: none; }
+.status__led--off { background: var(--copper); box-shadow: 0 0 0 3px color-mix(in srgb, var(--copper) 22%, transparent); }
+.notfound { min-height: 70vh; border-bottom: 0; }
 .hero__name { font-size: clamp(2.75rem, 9vw, 5.25rem); letter-spacing: -0.035em; line-height: 1; margin-bottom: 1.25rem; }
 .hero__headline { font-size: clamp(1.15rem, 2.4vw, 1.4rem); line-height: 1.5; color: var(--muted); max-width: 34rem; margin-bottom: 2rem; }
 .hero__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.75rem; }

@@ -8,7 +8,8 @@ export default defineConfig({
       "enabled": true
     },
     "assets": {
-      "notFoundHandling": "single-page-application"
+      // Unknown addresses get /404.html with a real 404 status, not the homepage.
+      "notFoundHandling": "404-page"
     }
   }
 });

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>OG card template</title>
+<!-- Link-preview card. Screenshot the #card element at 1200×630 and save as public/og.png. -->
+<link rel="stylesheet" href="/node_modules/@fontsource/ibm-plex-sans/600.css">
+<link rel="stylesheet" href="/node_modules/@fontsource/ibm-plex-sans/400.css">
+<link rel="stylesheet" href="/node_modules/@fontsource/ibm-plex-mono/400.css">
+<style>
+  body { margin: 0; background: #888; }
+  #card {
+    position: relative; width: 1200px; height: 630px; overflow: hidden; box-sizing: border-box;
+    background: #f6f5f1; color: #141816; font-family: 'IBM Plex Sans', sans-serif;
+    background-image: radial-gradient(rgba(20,24,22,0.09) 1.6px, transparent 1.9px);
+    background-size: 28px 28px;
+    padding: 64px 72px; display: grid; grid-template-columns: 1fr 300px; gap: 48px; align-items: center;
+  }
+  #card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(246,245,241,0) 55%, rgba(246,245,241,0.85)); pointer-events: none; }
+  .text { position: relative; z-index: 1; }
+  .status { display: inline-flex; align-items: center; gap: 12px; font: 400 20px 'IBM Plex Mono', monospace; color: #5b625e; border: 2px solid #d9dbd4; background: #fff; padding: 10px 18px; border-radius: 999px; margin-bottom: 36px; }
+  .led { width: 12px; height: 12px; border-radius: 50%; background: #0f6b52; box-shadow: 0 0 0 5px rgba(15,107,82,0.22); }
+  h1 { font-size: 104px; line-height: 0.95; letter-spacing: -0.04em; margin: 0 0 28px; font-weight: 600; }
+  p { font-size: 32px; line-height: 1.35; color: #5b625e; margin: 0; max-width: 720px; }
+  .url { position: absolute; left: 72px; bottom: 52px; font: 400 22px 'IBM Plex Mono', monospace; color: #b8662f; z-index: 1; }
+  .photo { position: relative; z-index: 1; justify-self: end; }
+  .photo img { width: 300px; height: 300px; border-radius: 8px; display: block; filter: saturate(0.92); }
+  .reg { position: absolute; width: 28px; height: 28px; border: 0 solid #141816; opacity: 0.55; }
+  .tl { top: -14px; left: -14px; border-width: 2px 0 0 2px; }
+  .br { bottom: -14px; right: -14px; border-width: 0 2px 2px 0; }
+</style>
+</head>
+<body>
+<div id="card">
+  <div class="text">
+    <div class="status"><span class="led"></span>Open to a 2027 placement</div>
+    <h1>Jamie Parr</h1>
+    <p>Computing student at Ulster University. I build web apps, games and tools.</p>
+  </div>
+  <div class="photo"><span class="reg tl"></span><span class="reg br"></span><img src="/uploads/jamie-parr.jpg" alt=""></div>
+  <div class="url">jamie-parr.jamieparr05.workers.dev</div>
+</div>
+</body>
+</html>
