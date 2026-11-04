@@ -55,8 +55,9 @@ const pages = () => ({
   generateBundle(_, bundle) {
     const data = loadContent();
     const { site, projects } = data;
-    // Vite treats index.html as the entry, so its chunk is named after the input key ('main').
-    const entry = Object.values(bundle).find((c) => c.type === 'chunk' && c.isEntry && c.name === 'main');
+    // Vite names index.html's chunk after its input key ('main'). By the time post plugins run, Vite's HTML plugin
+    // has already cleared `isEntry` on it, so match by name.
+    const entry = Object.values(bundle).find((c) => c.type === 'chunk' && c.name === 'main');
     const cssFiles = [...(entry?.viteMetadata?.importedCss || [])];
     if (!cssFiles.length) {
       const css = Object.values(bundle).find((c) => c.type === 'asset' && c.fileName.endsWith('.css'));
