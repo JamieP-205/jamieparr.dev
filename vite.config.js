@@ -26,28 +26,6 @@ const content = () => ({
       .replace('<!--app-->', renderBody(data));
   },
 
-  // Project pages, robots.txt and the sitemap are emitted straight into the build.
-  generateBundle(_, bundle) {
-    const data = loadContent();
-    const { site, projects } = data;
-    // Vite treats index.html as the entry, so its chunk is named after the input key ('main').
-    const entry = Object.values(bundle).find((c) => c.type === 'chunk' && c.isEntry && c.name === 'main');
-    const css = [...(entry?.viteMetadata?.importedCss || [])].map((f) => `<link rel="stylesheet" crossorigin href="/${f}">`);
-    const assets = [...css, entry ? `<script type="module" crossorigin src="/${entry.fileName}"></script>` : ''].join('\n  ');
-    for (const p of projects) {
-      this.emitFile({ type: 'asset', fileName: `projects/${p.slug}/index.html`, source: renderProjectPage(p, data, { assets, noindex: !live }) });
-    }
-
-    const home = absolute(site, '/');
-    const robots = live ? `User-agent: *\nAllow: /\nSitemap: ${home}sitemap.xml\n` : 'User-agent: *\nDisallow: /\n';
-    this.emitFile({ type: 'asset', fileName: 'robots.txt', source: robots });
-    if (live) {
-      const urls = [home, ...projects.map((p) => absolute(site, projectUrl(p)))];
-      const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${u}</loc></url>`).join('\n')}\n</urlset>\n`;
-      this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: sitemap });
-    }
-  },
-
   configureServer(server) {
     // The editor (/admin) exists only on this machine, in dev. It's never built or deployed.
     server.middlewares.use('/admin', serveCms);
@@ -66,6 +44,41 @@ const content = () => ({
     });
     server.watcher.add(path.resolve('content'));
     server.watcher.on('change', (f) => f.includes(`${path.sep}content${path.sep}`) && server.ws.send({ type: 'full-reload' }));
+  },
+});
+
+// Project pages, robots.txt and the sitemap are emitted straight into the build.
+// `enforce: 'post'` so this runs after Vite's CSS plugin has produced the stylesheet.
+const pages = () => ({
+  name: 'content-pages',
+  enforce: 'post',
+  generateBundle(_, bundle) {
+    const data = loadContent();
+    const { site, projects } = data;
+    // Vite treats index.html as the entry, so its chunk is named after the input key ('main').
+    const entry = Object.values(bundle).find((c) => c.type === 'chunk' && c.isEntry && c.name === 'main');
+    const cssFiles = [...(entry?.viteMetadata?.importedCss || [])];
+    if (!cssFiles.length) {
+      const css = Object.values(bundle).find((c) => c.type === 'asset' && c.fileName.endsWith('.css'));
+      if (css) cssFiles.push(css.fileName);
+    }
+    if (!entry || !cssFiles.length) throw new Error(`content-pages: could not find the built JS/CSS (entry: ${entry?.fileName}, css: ${cssFiles})`);
+    const assets = [
+      ...cssFiles.map((f) => `<link rel="stylesheet" crossorigin href="/${f}">`),
+      `<script type="module" crossorigin src="/${entry.fileName}"></script>`,
+    ].join('\n  ');
+    for (const p of projects) {
+      this.emitFile({ type: 'asset', fileName: `projects/${p.slug}/index.html`, source: renderProjectPage(p, data, { assets, noindex: !live }) });
+    }
+
+    const home = absolute(site, '/');
+    const robots = live ? `User-agent: *\nAllow: /\nSitemap: ${home}sitemap.xml\n` : 'User-agent: *\nDisallow: /\n';
+    this.emitFile({ type: 'asset', fileName: 'robots.txt', source: robots });
+    if (live) {
+      const urls = [home, ...projects.map((p) => absolute(site, projectUrl(p)))];
+      const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${u}</loc></url>`).join('\n')}\n</urlset>\n`;
+      this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: sitemap });
+    }
   },
 });
 
@@ -88,6 +101,6 @@ function serveCms(req, res, next) {
 }
 
 export default defineConfig({
-  plugins: [content(), cloudflare()],
+  plugins: [content(), pages(), cloudflare()],
   build: { rollupOptions: { input: { main: 'index.html', notFound: '404.html' } } },
 });
