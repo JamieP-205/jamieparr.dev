@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "cf deploy",
-    "deploy:live": "cf deploy --mode live",
-    "dev": "cf dev"
+    "deploy": "cf deploy --mode live",
+    "dev": "cf dev",
+    "deploy:staging": "cf deploy"
   },
   "keywords": [],
   "author": "",
