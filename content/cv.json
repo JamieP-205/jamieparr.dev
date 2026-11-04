@@ -1,0 +1,13 @@
+{
+  "education": [
+    { "title": "BSc (Hons) Computing Technologies", "org": "Ulster University, Belfast", "dates": "2025 – 2029 (expected)", "detail": "Includes a placement year in 2027/28. Year 2 covers Java, Python with Flask and SQLAlchemy, and an Agile team project in a team of five." },
+    { "title": "Level 3 Extended Diploma in Technology", "org": "Southern Regional College", "dates": "2022 – 2024", "detail": "Grade D*DD." },
+    { "title": "IT Specialist: HTML and CSS", "org": "Certiport", "dates": "May 2023", "detail": "" }
+  ],
+  "work": [
+    { "title": "Temporary Production Operative", "org": "Saica Pack UK", "dates": "Jun – Sep 2026", "detail": "Ran and monitored automated packaging machinery and dealt with routine faults safely." },
+    { "title": "Warehouse Operative", "org": "Pet Connection", "dates": "Oct 2021 – Jul 2026", "detail": "Prepared customer and Amazon orders for dispatch and kept stock organised, alongside my studies." },
+    { "title": "Kitchen Porter", "org": "The Garden Room", "dates": "Aug 2024 – Jul 2026", "detail": "Supported the kitchen team through busy services." },
+    { "title": "Floor Staff", "org": "No.7 Duke", "dates": "Jun – Sep 2022", "detail": "Helped customers and prepared areas for events and service." }
+  ]
+}
