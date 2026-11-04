@@ -42,6 +42,12 @@ collections:
           - { name: name, label: Name, widget: string }
           - { name: headline, label: Headline, widget: text }
           - { name: availability, label: "Status line", widget: string }
+          - name: lookingFor
+            label: "What I'm looking for (strip under the intro)"
+            widget: list
+            fields:
+              - { name: label, label: Label, widget: string }
+              - { name: value, label: Value, widget: string }
           - { name: location, label: Location, widget: string }
           - { name: email, label: Email, widget: string }
           - { name: github, label: "GitHub URL", widget: string }

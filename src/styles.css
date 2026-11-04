@@ -156,24 +156,21 @@ main { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
 .case { display: grid; gap: 1.5rem 3rem; align-items: start; }
 @media (min-width: 52rem) {
   .case { grid-template-columns: 1.15fr 1fr; }
-  .case__more { grid-column: 1 / -1; }
 }
-.case__shot { position: relative; }
-.case__img { border-radius: 6px; border: 1px solid var(--line); aspect-ratio: 16 / 10; object-fit: cover; object-position: top; width: 100%; background: var(--surface); }
+.case__shot { display: block; position: relative; }
+.case__img { border-radius: 6px; border: 1px solid var(--line); aspect-ratio: 16 / 10; object-fit: cover; object-position: top; width: 100%; background: var(--surface); transition: border-color 0.15s; }
+.case__shot:hover .case__img, .card__shot:hover .card__img { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); }
 .case__num { font: 500 0.8125rem var(--mono); color: var(--copper); margin: 0 0 0.4rem; }
 .case__title { font-size: clamp(1.4rem, 3vw, 1.8rem); margin-bottom: 0.75rem; }
+.case__title a, .card__title a { text-decoration: none; }
+.case__title a:hover, .card__title a:hover { color: var(--accent); }
 .case__summary { color: var(--muted); font-size: 1.0625rem; margin-bottom: 1.1rem; }
 .case__links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1.25rem 0 0; }
 .case__links .btn { font-size: 0.8125rem; padding: 0.55rem 0.9rem; }
-.case__more { border-top: 1px solid var(--line); }
-.case__more summary {
-  cursor: pointer; list-style: none; padding: 0.9rem 0; min-height: 44px;
-  font: 500 0.875rem var(--mono); color: var(--accent);
-  display: flex; align-items: center; gap: 0.5rem;
-}
-.case__more summary::-webkit-details-marker { display: none; }
-.case__more summary::before { content: '+'; display: inline-grid; place-items: center; width: 1.25rem; height: 1.25rem; border: 1px solid currentColor; border-radius: 3px; font-size: 0.875rem; line-height: 1; }
-.case__more[open] summary::before { content: '−'; }
+.case__read { margin: 1.25rem 0 0; font: 500 0.875rem var(--mono); }
+.case__read a, .card__more { color: var(--accent); text-decoration: none; }
+.case__read a:hover, .card__more:hover { text-decoration: underline; }
+.card__more { align-self: center; }
 .case__body { padding: 0.5rem 0 1.5rem; max-width: 46rem; }
 .case__body h3 { font-size: 1.15rem; margin: 2rem 0 0.75rem; }
 .case__body h3:first-child { margin-top: 0; }
@@ -229,6 +226,29 @@ main { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
 .form input:focus, .form textarea:focus { outline: 2px solid var(--accent); outline-offset: 0; border-color: transparent; }
 .form button { justify-self: start; }
 .form__status { font: 0.875rem var(--mono); color: var(--accent); margin: 0; min-height: 1.4em; }
+
+/* ---------- "what I'm looking for" strip ---------- */
+.facts { border-bottom: 1px solid var(--line); padding: 1.6rem 0; }
+.facts dl { display: grid; gap: 1.25rem 2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); margin: 0; }
+.facts dt { font: 500 0.75rem var(--mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--copper); margin-bottom: 0.3rem; }
+.facts dd { margin: 0; font-size: 0.9375rem; line-height: 1.5; }
+
+/* ---------- project page ---------- */
+.crumbs { display: flex; flex-wrap: wrap; gap: 0.5rem; font: 0.8125rem var(--mono); color: var(--muted); padding: 1.5rem 0 0; }
+.crumbs a { text-decoration: none; }
+.project__head { padding: 1.75rem 0 2rem; max-width: 46rem; }
+.project__head h1 { font-size: clamp(2rem, 6vw, 3.25rem); letter-spacing: -0.03em; margin-bottom: 1rem; }
+.project__summary { font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--muted); margin-bottom: 1.25rem; }
+.project__shot { border: 1px solid var(--line); border-radius: 6px; margin: 0 0 2.5rem; background: var(--surface); width: 100%; }
+.project__body { padding-bottom: 3rem; border-bottom: 1px solid var(--line); }
+.project__next { padding: 2.5rem 0 3rem; }
+.project__next ul { list-style: none; padding: 0; margin: 0 0 2rem; display: grid; gap: 1.25rem 2rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); }
+.project__next li { display: grid; gap: 0.25rem; }
+.project__next li a { font-weight: 600; text-decoration: none; }
+.project__next li a:hover { color: var(--accent); }
+.project__next li span { font-size: 0.9rem; color: var(--muted); }
+.project__back { font: 500 0.875rem var(--mono); margin: 0; }
+.project__back a { text-decoration: none; color: var(--accent); }
 
 /* ---------- footer ---------- */
 .footer {

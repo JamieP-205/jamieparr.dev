@@ -1,8 +1,28 @@
 {
   "name": "Jamie Parr",
+  "url": "https://jamie-parr.jamieparr05.workers.dev",
+  "analyticsToken": "47b77cb96b974267b657738787985cd2",
   "headline": "Computing student at Ulster University. I build web apps, games and tools, and I'm looking for a 2027 placement.",
   "location": "Belfast, Northern Ireland",
   "availability": "Open to a 2027 placement · software, web or IT",
+  "lookingFor": [
+    {
+      "label": "Looking for",
+      "value": "A 12-month placement in software, web development or IT"
+    },
+    {
+      "label": "When",
+      "value": "From summer 2027, for my placement year"
+    },
+    {
+      "label": "Where",
+      "value": "Based in Belfast and willing to relocate"
+    },
+    {
+      "label": "Right now",
+      "value": "Year 2: Java, Python with Flask and SQLAlchemy, and an Agile team project"
+    }
+  ],
   "email": "jamieparr205@gmail.com",
   "github": "https://github.com/JamieP-205",
   "linkedin": "https://www.linkedin.com/in/jamie-parr-tech",
