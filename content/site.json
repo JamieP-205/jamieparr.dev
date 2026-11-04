@@ -10,5 +10,23 @@
   "photoAlt": "Jamie Parr in a navy suit and tie",
   "cv": "/uploads/Jamie-Parr-CV.pdf",
   "about": "I'm a second-year Computing Technologies student at Ulster University in Belfast.\n\nMost of what I know I've learned by building real things for real people. I build and maintain the website for a small internet radio station in Newry, made for older listeners who aren't confident with technology. I also built a Flask app the presenter uses on air to take song requests.\n\nI've worked part-time alongside my studies since 2021, in warehouses, kitchens and on a production line. That work taught me to stay calm when things break and to finish the job properly.",
-  "skills": ["HTML", "CSS", "JavaScript", "Node.js", "Python", "Flask", "SQLAlchemy", "SQLite", "Git & GitHub", "GitHub Actions", "Cloudflare Workers", "Netlify", "pytest", "Playwright"]
+  "skills": [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "jQuery",
+    "C#",
+    "Node.js",
+    "Python",
+    "Flask",
+    "SQLAlchemy",
+    "SQLite",
+    "Excel",
+    "Git & GitHub",
+    "GitHub Actions",
+    "Cloudflare Workers",
+    "Netlify",
+    "pytest",
+    "Playwright"
+  ]
 }

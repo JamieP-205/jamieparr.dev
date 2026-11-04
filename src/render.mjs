@@ -32,22 +32,47 @@ export function loadContent() {
 const node = (n, label, id) =>
   `<p class="node" aria-hidden="true"><span class="node__dot"></span><span class="node__num">${n}</span><span class="node__label">${label}</span></p><h2 id="${id}-title" class="section-title">`;
 
-function project(p) {
-  const slot = p.draft ? ' card--slot' : '';
-  const links = [
-    p.link && extLink(p.link, 'Visit site ↗'),
-    p.repo && extLink(p.repo, 'Source code ↗'),
-  ].filter(Boolean).join('');
-  const img = p.image
-    ? `<img class="card__img" src="${esc(p.image)}" alt="" loading="lazy" decoding="async" width="640" height="360">`
+const projectLinks = (p) =>
+  (p.links || [])
+    .map((l) => extLink(l.url, `${esc(l.label)} <span aria-hidden="true">↗</span>`, l.primary ? 'btn btn--solid' : 'btn'))
+    .join('');
+
+const chips = (p) => `<ul class="chips chips--small">${(p.tech || []).map((t) => `<li>${esc(t)}</li>`).join('')}</ul>`;
+
+const shot = (p, cls) =>
+  p.image
+    ? `<img class="${cls}" src="${esc(p.image)}" alt="${esc(p.imageAlt || '')}" loading="lazy" decoding="async" width="1280" height="800">`
     : '';
-  return `<article class="card${slot}">
-  ${img}
-  <h3 class="card__title">${esc(p.title)}</h3>
-  <p class="card__summary">${esc(p.summary)}</p>
-  <div class="card__body">${p.body}</div>
-  <ul class="chips chips--small">${(p.tech || []).map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
-  ${links ? `<p class="card__links">${links}</p>` : ''}
+
+// A main project: screenshot, summary, links, and the full write-up behind a toggle.
+function caseStudy(p, i) {
+  return `<article class="case">
+  <div class="case__shot">${shot(p, 'case__img')}</div>
+  <div class="case__intro">
+    <p class="case__num">${String(i + 1).padStart(2, '0')}</p>
+    <h3 class="case__title">${esc(p.title)}</h3>
+    <p class="case__summary">${esc(p.summary)}</p>
+    ${chips(p)}
+    <p class="case__links">${projectLinks(p)}</p>
+  </div>
+  <details class="case__more">
+    <summary>Read the case study</summary>
+    <div class="prose case__body">${p.body}</div>
+  </details>
+</article>`;
+}
+
+// A smaller project: compact card with the write-up shown in full.
+function card(p) {
+  return `<article class="card${p.draft ? ' card--slot' : ''}">
+  ${p.image ? `<div class="card__shot">${shot(p, 'card__img')}</div>` : ''}
+  <div class="card__text">
+    <h3 class="card__title">${esc(p.title)}</h3>
+    <p class="card__summary">${esc(p.summary)}</p>
+    <div class="card__body">${p.body}</div>
+    ${chips(p)}
+    <p class="card__links">${projectLinks(p)}</p>
+  </div>
 </article>`;
 }
 
@@ -98,7 +123,9 @@ export function renderBody({ site, cv, projects }) {
 
 <section class="section" id="work" aria-labelledby="work-title">
   ${node('02', 'work', 'work')}Projects</h2>
-  <div class="cards">${projects.map(project).join('')}</div>
+  <div class="cases">${projects.filter((p) => p.featured).map(caseStudy).join('')}</div>
+  ${projects.some((p) => !p.featured) ? `<h3 class="label more-label">Also</h3>
+  <div class="cards">${projects.filter((p) => !p.featured).map(card).join('')}</div>` : ''}
 </section>
 
 <section class="section" id="experience" aria-labelledby="experience-title">

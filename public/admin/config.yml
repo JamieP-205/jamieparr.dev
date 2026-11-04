@@ -19,9 +19,16 @@ collections:
       - { name: title, label: Title, widget: string }
       - { name: summary, label: "One-line summary", widget: string }
       - { name: tech, label: "Tools used", widget: list, hint: "e.g. Python, Flask" }
-      - { name: link, label: "Live site link", widget: string, required: false }
-      - { name: repo, label: "Source code link", widget: string, required: false }
-      - { name: image, label: "Screenshot (16:9)", widget: image, required: false }
+      - name: links
+        label: Links
+        widget: list
+        fields:
+          - { name: label, label: "Button text", widget: string }
+          - { name: url, label: URL, widget: string }
+          - { name: primary, label: "Highlight this button", widget: boolean, default: false }
+      - { name: image, label: "Screenshot (16:10)", widget: image, required: false }
+      - { name: imageAlt, label: "Screenshot description", widget: string, required: false }
+      - { name: featured, label: "Main case study (big layout)", widget: boolean, default: true }
       - { name: order, label: "Position (1 = first)", widget: number, value_type: int }
       - { name: draft, label: "Placeholder (shows as a dashed slot)", widget: boolean, default: false }
       - { name: body, label: "Write-up", widget: markdown }
