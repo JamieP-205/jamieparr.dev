@@ -3,17 +3,21 @@ title: "EOS Delivery System"
 summary: "A C# desktop app for calculating delivery quotes and producing invoices, with input validation, discounts and print preview."
 tech: ["C#", ".NET 10", "Windows Forms", "GitHub Actions"]
 links:
-  - { label: "Download Windows app", url: "https://github.com/JamieP-205/eos-delivery-system/releases/latest/download/EosDelivery-windows-x64.zip", primary: true }
+  - { label: "Try in browser", url: "https://jamiep-205.github.io/eos-delivery-system/browser/", primary: true }
+  - { label: "Download Windows app", url: "https://github.com/JamieP-205/eos-delivery-system/releases/latest/download/EosDelivery-windows-x64.zip" }
   - { label: "Source code", url: "https://github.com/JamieP-205/eos-delivery-system" }
+access: "Browser version of the Windows app, running its own calculation code. Press Fill demo login, then Auto Fill and EOS Invoice."
 image: "/uploads/projects/eos-app.webp"
 imageAlt: "The EOS Delivery System window with customer details, package options and an itemised invoice"
-featured: true
-order: 2
+featured: false
+order: 4
 draft: false
 ---
 A Windows Forms app based on my EOS coursework at SRC Newry. You enter the customer and package details, calculate the price, then save or print the invoice.
 
-**Try it.** Download the zip, extract it and run `EosDelivery.exe`. It includes its own .NET runtime. Log in with **JamieP** / **password123**, select **Auto Fill (for testing)**, then **EOS Invoice**. Enter `discount` for 20% off.
+**Try it in your browser.** The [browser version](https://jamiep-205.github.io/eos-delivery-system/browser/) is a web page rebuilt around the Windows app's own `Quote.cs`, compiled to WebAssembly, so prices, validation and the invoice text are the same code. It isn't the Windows program running in a browser. Its results were checked against the original for nine examples, including the sample below ([details](https://github.com/JamieP-205/eos-delivery-system/blob/main/docs/browser-version.md)).
+
+**Or on Windows.** Download the zip, extract it and run `EosDelivery.exe`. It includes its own .NET runtime. Log in with **JamieP** / **password123**, select **Auto Fill (for testing)**, then **EOS Invoice**. Enter `discount` for 20% off.
 
 ### A sample calculation
 

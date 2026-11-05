@@ -2,6 +2,11 @@ node_modules/
 dist/
 .cloudflare/
 .wrangler/
+.netlify/
+CLAUDE.md
+AGENTS.md
+portfolio-commit-history.txt
+portfolio-commit-messages.txt
 .dev.vars*
 .env*
 

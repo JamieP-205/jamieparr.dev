@@ -2,7 +2,7 @@ import { cloudflare } from '@cloudflare/vite-plugin';
 import { defineConfig } from 'vite';
 import fs from 'node:fs';
 import path from 'node:path';
-import { loadContent, renderBody, renderProjectPage, analyticsTag, projectUrl, absolute } from './src/render.mjs';
+import { loadContent, renderBody, renderProjectPage, analyticsTag, projectUrl, absolute, topbar } from './src/render.mjs';
 
 // Pre-renders every page from /content at build time, so visitors get plain HTML.
 // `live` is true for `cf deploy --mode live` (public) and false for staging (noindex).
@@ -21,6 +21,7 @@ const content = () => ({
     return html
       .replace('<!--noindex-->', live ? '' : '<meta name="robots" content="noindex, nofollow">')
       .replace('<!--analytics-->', analyticsTag(site))
+      .replace('<!--topbar-->', topbar(false))
       .replaceAll('%SITE_URL%', site.url.replace(/\/$/, ''))
       .replaceAll('%HEADLINE%', site.headline.replace(/"/g, '&quot;'))
       .replace('<!--app-->', renderBody(data));
@@ -52,6 +53,7 @@ const content = () => ({
 const pages = () => ({
   name: 'content-pages',
   enforce: 'post',
+  applyToEnvironment(environment) { return environment.name === 'client'; },
   generateBundle(_, bundle) {
     const data = loadContent();
     const { site, projects } = data;
@@ -103,5 +105,7 @@ function serveCms(req, res, next) {
 
 export default defineConfig({
   plugins: [content(), pages(), cloudflare()],
-  build: { rollupOptions: { input: { main: 'index.html', notFound: '404.html' } } },
+  environments: {
+    client: { build: { rollupOptions: { input: { main: 'index.html', notFound: '404.html' } } } },
+  },
 });

@@ -4,6 +4,7 @@ summary: "A website for a radio station in Newry, with live listening, track inf
 tech: ["HTML", "CSS", "JavaScript", "Netlify Functions", "Cloudflare Workers", "Python", "Flask", "SQLAlchemy", "pytest"]
 links:
   - { label: "Visit coastinternetradio.com", url: "https://coastinternetradio.com", primary: true }
+  - { label: "Try the request board", url: "https://coast-requests-demo.onrender.com" }
   - { label: "Website code", url: "https://github.com/JamieP-205/coast-radio" }
   - { label: "Coast Requests code", url: "https://github.com/JamieP-205/coast-requests" }
 image: "/uploads/projects/coast-home.webp"
@@ -38,6 +39,8 @@ I built the first version in May 2026 using online tutorials, my class notes and
 3. The app checks Netlify's signature over the exact request body, refuses anything unsigned, then stores the request in SQLite through SQLAlchemy.
 4. The presenter signs in and works through the list.
 
-**Testing and security.** 23 pytest tests run on GitHub Actions. They cover the webhook signature, duplicate and unwanted submissions, sign-in, CSRF protection, marking requests played, escaping listeners' text and UK times. The password is stored only as a hash, every form has a CSRF token, and a Content-Security-Policy allows only the app's own files. It's hosted on PythonAnywhere, and Claude Code assisted with the code.
+**Try it.** The [request board demo](https://coast-requests-demo.onrender.com) is a separate copy with fictional requests. Each visitor gets their own board, and it has no connection to the station, so it can't see real requests or listener details. It sleeps after 15 minutes without visitors, so the first visit after that takes about a minute.
+
+**Testing and security.** 32 pytest tests run on GitHub Actions. They cover the webhook signature, duplicate and unwanted submissions, sign-in, CSRF protection, marking requests played, escaping listeners' text, UK times and keeping each demo visitor's board private. The password is stored only as a hash, every form has a CSRF token, and a Content-Security-Policy allows only the app's own files. It's hosted on PythonAnywhere, and Claude Code assisted with the code.
 
 **Next steps.** Pause sign-in after several wrong passwords, and add a "can't play this one" option with a reason.

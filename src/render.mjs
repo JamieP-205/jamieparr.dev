@@ -39,7 +39,7 @@ export const analyticsTag = (site) =>
 
 /* ---------- shared pieces ---------- */
 
-const topbar = (home) => {
+export const topbar = (home) => {
   const h = (id) => (home ? `#${id}` : `/#${id}`);
   return `<a class="skip" href="#main">Skip to content</a>
 <header class="topbar">
@@ -47,12 +47,30 @@ const topbar = (home) => {
   <nav aria-label="Sections"><ul>
     <li><a href="${h('about')}">about</a></li><li><a href="${h('work')}">work</a></li><li><a href="${h('experience')}">cv</a></li><li><a href="${h('contact')}">contact</a></li>
   </ul></nav>
+  <details class="preferences" id="display-settings" hidden>
+    <summary><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3"/><circle cx="15" cy="17" r="3"/></svg><span>Settings</span></summary>
+    <div class="preferences__panel">
+      <h2>Display &amp; accessibility</h2>
+      <fieldset class="theme-options"><legend>Theme</legend>
+        <div class="theme-options__choices">
+          <label><input type="radio" name="colour-theme" value="system" checked><span>System</span></label>
+          <label><input type="radio" name="colour-theme" value="light"><span>Light</span></label>
+          <label><input type="radio" name="colour-theme" value="dark"><span>Dark</span></label>
+        </div>
+      </fieldset>
+      <label class="preference-row"><span>Larger text</span><input type="checkbox" id="larger-text" data-preference="largeText"></label>
+      <label class="preference-row"><span>Stronger contrast</span><input type="checkbox" id="stronger-contrast" data-preference="contrast"></label>
+      <label class="preference-row"><span>Reduce motion</span><input type="checkbox" id="reduce-motion" data-preference="reduceMotion" aria-describedby="motion-note"></label>
+      <label class="preference-row"><span>Hide background pattern</span><input type="checkbox" id="hide-pattern" data-preference="hidePattern"></label>
+      <p class="preferences__note" id="motion-note">Your device's reduced-motion setting is always respected.</p>
+      <button class="preferences__reset" type="button" id="reset-preferences">Reset to defaults</button>
+    </div>
+  </details>
 </header>`;
 };
 
 const footer = (site) => `<footer class="footer">
   <p>© ${new Date().getFullYear()} ${esc(site.name)}</p>
-  <p class="footer__mono">portfolio · hosted on cloudflare</p>
 </footer>`;
 
 const node = (n, label, id) =>
@@ -62,6 +80,9 @@ const projectLinks = (p) =>
   (p.links || [])
     .map((l) => extLink(l.url, `${esc(l.label)} <span aria-hidden="true">↗</span>`, l.primary ? 'btn btn--solid' : 'btn'))
     .join('');
+
+// Short instructions shown beside the buttons, e.g. how to sign in to a demo.
+const access = (p) => (p.access ? `<p class="access-note">${esc(p.access)}</p>` : '');
 
 const chips = (p) => `<ul class="chips chips--small">${(p.tech || []).map((t) => `<li>${esc(t)}</li>`).join('')}</ul>`;
 
@@ -83,12 +104,13 @@ function caseStudy(p, i) {
     <p class="case__summary">${esc(p.summary)}</p>
     ${chips(p)}
     <p class="case__links">${projectLinks(p)}</p>
+    ${access(p)}
     <p class="case__read"><a href="${href}">Read the case study <span aria-hidden="true">→</span></a></p>
   </div>
 </article>`;
 }
 
-// A smaller project: compact card with the write-up shown in full.
+// A smaller project: compact summary linking to the full case study.
 function card(p) {
   const href = projectUrl(p);
   return `<article class="card${p.draft ? ' card--slot' : ''}">
@@ -96,8 +118,8 @@ function card(p) {
   <div class="card__text">
     <h3 class="card__title"><a href="${href}">${esc(p.title)}</a></h3>
     <p class="card__summary">${esc(p.summary)}</p>
-    <div class="card__body">${p.body}</div>
     ${chips(p)}
+    ${access(p)}
     <p class="card__links">${projectLinks(p)}<a class="card__more" href="${href}">Details <span aria-hidden="true">→</span></a></p>
   </div>
 </article>`;
@@ -121,10 +143,10 @@ export function renderBody({ site, cv, projects }) {
   return `
 ${topbar(true)}
 
-<main id="main">
+<main id="main" tabindex="-1">
 <section class="hero" id="top">
   <div class="hero__text">
-    <p class="status"><span class="status__led" aria-hidden="true"></span>${esc(site.availability)}</p>
+    <p class="hero__availability">${esc(site.availability)}</p>
     <h1 class="hero__name">${esc(site.name)}</h1>
     <p class="hero__headline">${esc(site.headline)}</p>
     <p class="hero__actions">
@@ -175,11 +197,14 @@ ${facts(site)}
       <p>Placement offers, questions about my work, or just hello. I read everything.</p>
       <p class="direct"><a href="mailto:${esc(site.email)}">${esc(site.email)}</a></p>
     </div>
-    <form class="form" id="contact-form" data-email="${esc(site.email)}" novalidate>
-      <label>Your name<input name="name" autocomplete="name" required></label>
-      <label>Your email<input name="email" type="email" autocomplete="email" required></label>
-      <label>Message<textarea name="message" rows="5" required></textarea></label>
-      <button class="btn btn--solid" type="submit">Send message</button>
+    <form class="form" id="contact-form" data-email="${esc(site.email)}" aria-describedby="contact-help" novalidate>
+      <label>Your name<input name="name" autocomplete="name" maxlength="100" required></label>
+      <label>Your email<input name="email" type="email" autocomplete="email" maxlength="254" required></label>
+      <label>Message<textarea name="message" rows="5" maxlength="5000" required></textarea></label>
+      <label class="form__trap" aria-hidden="true">Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label>
+      <p id="contact-help">Your message goes directly to my inbox. I'll reply by email.</p>
+      <button class="btn btn--solid" type="submit" disabled>Send message</button>
+      <noscript><p>Please email <a href="mailto:${esc(site.email)}">${esc(site.email)}</a> directly; the form requires JavaScript.</p></noscript>
       <p class="form__status" role="status" aria-live="polite"></p>
     </form>
   </div>
@@ -214,20 +239,24 @@ export function renderProjectPage(p, { site, projects }, { assets = '', noindex 
   <meta property="og:image:alt" content="${esc(p.imageAlt || p.title)}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0d1110" media="(prefers-color-scheme: dark)">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#111316" media="(prefers-color-scheme: dark)">
+  <script src="/theme.js"></script>
+  <link rel="icon" href="/favicon.ico?v=2" sizes="16x16 32x32 48x48">
+  <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
   ${assets}
   ${analyticsTag(site)}
 </head>
 <body>
 ${topbar(false)}
-<main id="main" class="project">
+<main id="main" class="project" tabindex="-1">
   <nav class="crumbs" aria-label="Breadcrumb"><a href="/">~/jamie-parr</a><span>/</span><a href="/#work">work</a><span>/</span><span aria-current="page">${esc(p.slug)}</span></nav>
   <header class="project__head">
     <h1>${esc(p.title)}</h1>
     <p class="project__summary">${esc(p.summary)}</p>
     ${chips(p)}
     <p class="case__links">${projectLinks(p)}</p>
+    ${access(p)}
   </header>
   ${shot(p, 'project__shot', { eager: true })}
   <div class="prose case__body project__body">${p.body}</div>
