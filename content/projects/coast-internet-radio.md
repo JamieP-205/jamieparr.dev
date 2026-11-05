@@ -41,6 +41,19 @@ I built the first version in May 2026 using online tutorials, my class notes and
 
 **Try it.** The [request board demo](https://coast-requests-demo.onrender.com) is a separate copy with fictional requests. Each visitor gets their own board, and it has no connection to the station, so it can't see real requests or listener details. It sleeps after 15 minutes without visitors, so the first visit after that takes about a minute.
 
-**Testing and security.** 32 pytest tests run on GitHub Actions. They cover the webhook signature, duplicate and unwanted submissions, sign-in, CSRF protection, marking requests played, escaping listeners' text, UK times and keeping each demo visitor's board private. The password is stored only as a hash, every form has a CSRF token, and a Content-Security-Policy allows only the app's own files. It's hosted on PythonAnywhere, and Claude Code assisted with the code.
+<h3 id="request-walkthrough">Follow a request in about a minute</h3>
+
+This silent, captioned recording follows a fictional request through the working demo: enter a song, find it on the presenter's board, mark it Played, then put it back with Not played yet.
+
+<video controls playsinline preload="none" poster="/uploads/projects/coast-requests-walkthrough.webp" aria-label="Coast Requests walkthrough, with on-screen captions" aria-describedby="coast-video-description" style="display:block;width:100%;height:auto">
+  <source src="/uploads/projects/coast-requests-walkthrough.mp4" type="video/mp4">
+  <a href="/uploads/projects/coast-requests-walkthrough.mp4">Download the walkthrough</a>.
+</video>
+
+<p id="coast-video-description">A demo listener requests Wildflowers by Tom Petty, with a dedication. The board opens at that request, keeping the oldest requests first. Played moves it to Played recently. Not played yet returns it to the waiting list. The demo stores the request directly in a private database; it does not demonstrate the live Netlify delivery step, send email or play a song on air.</p>
+
+**The improvement.** The demo originally added a randomly selected sample. It now lets visitors type their own fictional request and follow it through the board. The form keeps entered details after a validation error and opens the board at the new request. Codex assisted with implementing and checking this update. [Before-and-after notes and checks](https://github.com/JamieP-205/coast-requests/blob/main/docs/listener-walkthrough.md).
+
+**Testing and security.** 37 pytest tests cover the webhook signature, duplicate and unwanted submissions, sign-in, CSRF protection, marking requests played, escaping listeners' text, UK times, keeping each demo visitor's board private and the new listener form. Tests run on GitHub Actions. The form and board were also checked in a browser at desktop and phone widths. The password is stored only as a hash, every form has a CSRF token, and a Content-Security-Policy allows only the app's own files. The station's board is hosted on PythonAnywhere, and Claude Code assisted with the original code.
 
 **Next steps.** Pause sign-in after several wrong passwords, and add a "can't play this one" option with a reason.
