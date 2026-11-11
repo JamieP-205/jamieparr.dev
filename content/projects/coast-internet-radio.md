@@ -9,6 +9,10 @@ links:
   - { label: "Coast Requests code", url: "https://github.com/JamieP-205/coast-requests" }
 image: "/uploads/projects/coast-home.webp"
 imageAlt: "The Coast Internet Radio homepage, with a Listen live button and the song playing now with its album cover"
+proof:
+  - "Live at coastinternetradio.com, with a request board the presenter uses on air"
+  - "Signed webhooks, CSRF tokens and a Content-Security-Policy on the request board"
+  - "24 site tests and 37 pytest tests"
 featured: true
 order: 1
 draft: false
@@ -45,7 +49,7 @@ I built the first version in May 2026 using online tutorials, my class notes and
 
 This silent, captioned recording follows a fictional request through the working demo: enter a song, find it on the presenter's board, mark it Played, then put it back with Not played yet.
 
-<video controls playsinline preload="none" poster="/uploads/projects/coast-requests-walkthrough.webp" aria-label="Coast Requests walkthrough, with on-screen captions" aria-describedby="coast-video-description" style="display:block;width:100%;height:auto">
+<video controls playsinline preload="none" poster="/uploads/projects/coast-requests-walkthrough.webp" aria-label="Coast Requests walkthrough, with on-screen captions" aria-describedby="coast-video-description">
   <source src="/uploads/projects/coast-requests-walkthrough.mp4" type="video/mp4">
   <a href="/uploads/projects/coast-requests-walkthrough.mp4">Download the walkthrough</a>.
 </video>

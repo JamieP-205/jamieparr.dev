@@ -7,6 +7,10 @@ links:
   - { label: "Source code and workbook", url: "https://github.com/JamieP-205/armagh-weather-analysis" }
 image: "/uploads/projects/armagh-overview.webp"
 imageAlt: "Charts of annual temperature, rainfall, sunshine and frost at Armagh Observatory"
+proof:
+  - "2,028 monthly records, from 1853 to 2021"
+  - "Missing readings kept separate from real zeros"
+  - "Eight unit tests on the data handling"
 featured: true
 order: 3
 draft: false

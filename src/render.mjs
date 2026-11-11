@@ -86,6 +86,9 @@ const access = (p) => (p.access ? `<p class="access-note">${esc(p.access)}</p>` 
 
 const chips = (p) => `<ul class="chips chips--small">${(p.tech || []).map((t) => `<li>${esc(t)}</li>`).join('')}</ul>`;
 
+// Optional short evidence points for a featured project (front matter `proof`).
+const proof = (p) => (p.proof?.length ? `<ul class="proof">${p.proof.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>` : '');
+
 const shot = (p, cls, { eager = false } = {}) =>
   p.image
     ? `<img class="${cls}" src="${esc(p.image)}" alt="${esc(p.imageAlt || '')}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" width="1280" height="800">`
@@ -102,6 +105,7 @@ function caseStudy(p, i) {
     <p class="case__num">${String(i + 1).padStart(2, '0')}</p>
     <h3 class="case__title"><a href="${href}">${esc(p.title)}</a></h3>
     <p class="case__summary">${esc(p.summary)}</p>
+    ${proof(p)}
     ${chips(p)}
     <p class="case__links">${projectLinks(p)}</p>
     ${access(p)}

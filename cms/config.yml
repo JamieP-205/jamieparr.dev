@@ -18,6 +18,7 @@ collections:
     fields:
       - { name: title, label: Title, widget: string }
       - { name: summary, label: "One-line summary", widget: string }
+      - { name: proof, label: "Proof points", widget: list, required: false, hint: "Short facts shown on the homepage card (main case studies only)" }
       - { name: tech, label: "Tools used", widget: list, hint: "e.g. Python, Flask" }
       - name: links
         label: Links

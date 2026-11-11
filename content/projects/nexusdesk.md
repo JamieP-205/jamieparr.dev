@@ -13,6 +13,10 @@ links:
 access: "No account needed: choose Employee, Technician or Administrator. Each visitor gets a private copy of the fictional data. On free hosting, the first visit after a quiet spell takes about a minute to start."
 image: "/uploads/projects/nexusdesk-dashboard.png"
 imageAlt: "NexusDesk 0.2.0 dashboard showing ticket totals and workload charts using fictional demo records"
+proof:
+  - "96 automated tests, run on Java 17, 21 and 25"
+  - "Separate employee, technician and administrator permissions with Spring Security"
+  - "Try it in your browser, no account needed"
 featured: true
 order: 2
 draft: false
@@ -25,7 +29,7 @@ An employee raises a ticket and can follow its replies and history. A technician
 
 The 99-second silent walkthrough follows a ticket from the employee to the technician and back, then shows equipment being assigned and returned. You can follow the typing, clicks and scrolling as it happens.
 
-<video controls playsinline preload="none" poster="/uploads/projects/nexusdesk-dashboard.png" aria-label="NexusDesk demo walkthrough; description follows" aria-describedby="nexusdesk-video-description" style="display:block;width:100%;height:auto">
+<video controls playsinline preload="none" poster="/uploads/projects/nexusdesk-dashboard.png" aria-label="NexusDesk demo walkthrough; description follows" aria-describedby="nexusdesk-video-description">
   <source src="/uploads/projects/nexusdesk-walkthrough.mp4?v=20261105-paced" type="video/mp4">
   <a href="/uploads/projects/nexusdesk-walkthrough.mp4?v=20261105-paced">Download the walkthrough video</a>.
 </video>
