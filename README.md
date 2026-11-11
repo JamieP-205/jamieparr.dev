@@ -1,4 +1,4 @@
-# Jamie Parr — portfolio
+# Jamie Parr - portfolio
 
 Source for [jamieparr.dev](https://jamieparr.dev), my portfolio and project case studies.
 
