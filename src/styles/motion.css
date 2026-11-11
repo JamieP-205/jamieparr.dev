@@ -1,0 +1,93 @@
+/* Motion is one system: two easings, slow arrivals (900 to 1100 ms) and quick feedback (150 to 250 ms).
+   It lives in four places: the homepage opening, a few scroll-linked reveals, hover and press, and page changes.
+   Keyframes only say where a thing starts, so with motion off each element simply sits in its finished place.
+   The two clip-path reveals also name their end, because a clip-path cannot be blended into `none`: without it they jump.
+   All of it stops for prefers-reduced-motion and for the site's own "Reduce motion" setting (end of this file). */
+@layer motion {
+  @keyframes unmask { from { clip-path: inset(14% 10% round 4px); } to { clip-path: inset(0 round 4px); } }
+  @keyframes draw { from { scale: 0 1; } }
+  @keyframes draw-down { from { scale: 1 0; } }
+  @keyframes wipe { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0); } }
+  @keyframes settle { from { scale: var(--settle-from); } }
+  @keyframes rise { from { translate: 0 105%; } }
+  @keyframes fade-up { from { opacity: 0; translate: 0 16px; } }
+
+  html { scroll-behavior: smooth; }
+
+  /* ---------- feedback ---------- */
+  .link, .bar nav a, .feature__title a, .row__title a { transition: background-size 250ms var(--ease-out); }
+  .btn, .bar__cv { transition: background-color 150ms var(--ease-out), scale 150ms var(--ease-out); }
+  .btn:active:not(:disabled) { scale: 0.97; }
+  /* The scroll reveal animates `scale`; hover uses `transform`, so the two never fight. */
+  .stage__img { transition: transform 250ms var(--ease-out); }
+  .stage:hover .stage__img { transform: scale(1.03); }
+  .preferences__panel { transform-origin: top right; transition: opacity 150ms var(--ease-out), scale 150ms var(--ease-out); }
+  @starting-style { .preferences[open] .preferences__panel { opacity: 0; scale: 0.96; } }
+
+  /* ---------- homepage opening, once ---------- */
+  /* The portrait is uncovered from the bottom while it settles; the name rises a word at a time; the rest follows. */
+  .hero__photo { animation: wipe 1100ms var(--ease-in-out) both; }
+  .hero__photo img { --settle-from: 1.1; animation: settle 1100ms var(--ease-out) both; }
+  .hero__line > span { animation: rise 1000ms var(--ease-out) 150ms both; }
+  .hero__line + .hero__line > span { animation-delay: 240ms; }
+  .hero__copy > :not(.hero__name) { animation: fade-up 900ms var(--ease-out) 600ms both; }
+  /* Project pages, the colophon and the 404 open the same way: the title rises, the rest follows. */
+  .rise > span { animation: rise 1000ms var(--ease-out) 150ms both; }
+  .case__head > :not(.case__title, .crumbs), .lost > :not(.lost__code) { animation: fade-up 900ms var(--ease-out) 600ms both; }
+
+  /* ---------- scroll ---------- */
+  @supports (animation-timeline: view()) {
+    @keyframes recede { to { translate: 0 -6%; opacity: 0.3; } }
+    @keyframes appear { from { opacity: 0; visibility: hidden; } }
+
+    /* The hero stays put and the paper sheet slides up over it, while the hero's contents drift up and dim. */
+    @media (min-width: 46rem) and (min-height: 36rem) and (orientation: landscape) {
+      .hero { position: sticky; top: var(--bar); }
+      .hero__inner { animation: recede linear both; animation-timeline: scroll(root); animation-range: 0 100svh; }
+    }
+
+    /* The name in the top bar arrives as the hero's name is covered (pinned) or scrolled away (phones). */
+    .bar--home .bar__name { animation: appear linear both; animation-timeline: scroll(root); animation-range: 55svh 80svh; }
+    @media (max-width: 46rem), (orientation: portrait) {
+      .bar--home .bar__name { animation-range: 15svh 30svh; }
+    }
+
+    /* Screenshots are uncovered as they come into view. */
+    .stage__frame { animation: unmask var(--ease-out) both; animation-timeline: view(); animation-range: entry 0% cover 35%; }
+    .stage__img { --settle-from: 1.06; animation: settle var(--ease-out) both; animation-timeline: view(); animation-range: entry 0% cover 35%; }
+
+    /* A project page's own screenshot sits near the top, so it opens on load instead. */
+    .case__stage .stage__frame { animation: unmask 1100ms var(--ease-in-out) 200ms both; animation-timeline: auto; }
+    .case__stage .stage__img { animation: settle 1100ms var(--ease-out) 200ms both; animation-timeline: auto; }
+
+    /* The Coast flow's line is drawn as the figure scrolls in: across when wide, down when stacked. */
+    .flow__steps::before { animation: draw-down var(--ease-out) both; animation-timeline: view(); animation-range: entry 20% cover 40%; }
+    @container (min-width: 44rem) {
+      .flow__steps::before { animation-name: draw; }
+    }
+
+    /* Section headings rise from behind their own edge, like the name. */
+    .title { view-timeline: --title; }
+    .title > span { animation: rise var(--ease-out) both; animation-timeline: --title; animation-range: cover 0% cover 25%; }
+  }
+
+  /* ---------- page to page: a curtain ---------- */
+  /* The old page lifts and fades while the new one is uncovered from the bottom. The top bar stays still. */
+  @view-transition { navigation: auto; }
+  .bar { view-transition-name: bar; }
+  @keyframes lift { to { opacity: 0; translate: 0 -2%; } }
+  ::view-transition-old(root) { animation: lift 550ms var(--ease-in-out) both; }
+  ::view-transition-new(root) { animation: wipe 550ms var(--ease-in-out) both; }
+
+  /* ---------- off ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    @view-transition { navigation: none; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+    .hero { position: static; }
+  }
+  :root[data-reduce-motion='true'] { scroll-behavior: auto; }
+  :root[data-reduce-motion='true'] *, :root[data-reduce-motion='true'] *::before, :root[data-reduce-motion='true'] *::after { animation: none !important; transition: none !important; }
+  :root[data-reduce-motion='true'] .hero { position: static; }
+  :root[data-reduce-motion='true']::view-transition-group(*), :root[data-reduce-motion='true']::view-transition-old(*), :root[data-reduce-motion='true']::view-transition-new(*) { animation: none !important; }
+}

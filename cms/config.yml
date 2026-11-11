@@ -1,6 +1,6 @@
 # Sveltia CMS: edits the files in /content.
-# No GitHub repo is used. Open /admin locally (npx cf dev) in Chrome or Edge,
-# choose "Work with Local Repository", pick this folder, edit, then deploy.
+# No GitHub repo is used. Run `npm run dev` (which runs `cf dev`) and open /admin on the local address it prints,
+# in Chrome or Edge. Choose "Work with Local Repository", pick this folder, edit, then deploy.
 backend:
   name: github
   repo: JamieP-205/jamie-parr-site
@@ -16,23 +16,52 @@ collections:
     slug: "{{slug}}"
     sortable_fields: [order, title]
     fields:
-      - { name: title, label: Title, widget: string }
-      - { name: summary, label: "One-line summary", widget: string }
-      - { name: proof, label: "Proof points", widget: list, required: false, hint: "Short facts shown on the homepage card (main case studies only)" }
-      - { name: tech, label: "Tools used", widget: list, hint: "e.g. Python, Flask" }
+      - { name: title, label: Title, widget: string, hint: "The project's name. Heading on its page and on the homepage." }
+      - { name: summary, label: "One-line summary", widget: string, hint: "Shown under the title on the project page, and on the homepage cards and rows." }
+      - { name: context, label: "Context line", widget: string, required: false, hint: "The quiet line under the title, e.g. who it was for or when." }
+      - { name: short, label: "Short name", widget: string, required: false, hint: "Link text for this project in the skills table on the homepage. Falls back to the title." }
+      - { name: tech, label: "Tools used", widget: list, hint: "Shown on the project page and in the homepage rows. Each one must also be in a skill group (Site > Skills table), or the build stops." }
       - name: links
         label: Links
         widget: list
+        required: false
+        hint: "Buttons at the top of the project page."
         fields:
           - { name: label, label: "Button text", widget: string }
           - { name: url, label: URL, widget: string }
-          - { name: primary, label: "Highlight this button", widget: boolean, default: false }
-      - { name: image, label: "Screenshot (16:10)", widget: image, required: false }
-      - { name: imageAlt, label: "Screenshot description", widget: string, required: false }
-      - { name: featured, label: "Main case study (big layout)", widget: boolean, default: true }
-      - { name: order, label: "Position (1 = first)", widget: number, value_type: int }
-      - { name: draft, label: "Placeholder (shows as a dashed slot)", widget: boolean, default: false }
-      - { name: body, label: "Write-up", widget: markdown }
+          - { name: primary, label: "Highlight this button", widget: boolean, default: false, hint: "The first highlighted link also becomes 'Visit the site' under the lead project on the homepage." }
+      - { name: access, label: "How to try it", widget: text, required: false, hint: "A short note under the buttons on the project page, e.g. what to click or whether a sign-in is needed." }
+      - { name: image, label: Screenshot, widget: image, required: false, hint: "Shown uncropped at its own proportions, on the project page and the homepage." }
+      - { name: imageAlt, label: "Screenshot description", widget: string, required: false, hint: "Read aloud by screen readers. Say what the screenshot shows." }
+      - { name: proof, label: "Proof points", widget: list, required: false, hint: "Short facts. Shown beside the screenshot on the project page and under the lead project on the homepage." }
+      - name: exhibit
+        label: "Special figure"
+        widget: object
+        required: false
+        hint: "An optional figure between the screenshot and the write-up on the project page. Choose a type, then fill in only the part for that type."
+        fields:
+          - { name: type, label: Type, widget: select, options: [{ label: "Flow (steps in order)", value: flow }, { label: "Roles (who can do what)", value: roles }, { label: "Chart (from a CSV file)", value: chart }] }
+          - { name: caption, label: Heading, widget: string, hint: "The heading shown above the figure (all types)." }
+          - name: steps
+            label: "Steps (flow only)"
+            widget: list
+            required: false
+            hint: "Used when the type is Flow. Shown in this order, each handing over to the next."
+            fields:
+              - { name: label, label: Step, widget: string }
+              - { name: text, label: What happens, widget: string }
+          - name: roles
+            label: "Roles (roles only)"
+            widget: list
+            required: false
+            hint: "Used when the type is Roles. One box per role."
+            fields:
+              - { name: name, label: "Role name", widget: string }
+              - { name: can, label: "What they can do", widget: list }
+          - { name: data, label: "Data file (chart only)", widget: string, required: false, hint: "Used when the type is Chart. The CSV's name without .csv, from content/data, e.g. armagh-annual." }
+      - { name: featured, label: "Show with a screenshot", widget: boolean, default: true, hint: "On: shown with its screenshot at the top of Work (the first one by position is the large lead). Off: listed in the plain rows below." }
+      - { name: order, label: "Position (1 = first)", widget: number, value_type: int, hint: "Sets the order on the homepage and for 'Next project'." }
+      - { name: body, label: "Write-up", widget: markdown, hint: "The case study text on the project page. Its headings make the 'On this page' list." }
   - name: pages
     label: Site
     files:
@@ -40,24 +69,46 @@ collections:
         label: "About & contact details"
         file: content/site.json
         fields:
-          - { name: name, label: Name, widget: string }
-          - { name: headline, label: Headline, widget: text }
-          - { name: availability, label: "Status line", widget: string }
+          - { name: name, label: Name, widget: string, hint: "Big name on the homepage, top bar, footer and page titles." }
+          - { name: url, label: "Site address", widget: string, hint: "The live address. Used for share cards, canonical links and the sitemap." }
+          - { name: analyticsToken, label: "Visitor counter token", widget: string, required: false, hint: "Cloudflare Web Analytics token. Leave empty to turn the counter off." }
+          - { name: headline, label: Headline, widget: text, hint: "The sentence before the first full stop becomes the line under the name; the whole thing is the search description." }
+          - { name: availability, label: "Status line", widget: string, hint: "Small line under the role at the top of the homepage." }
+          - { name: lead, label: "Intro paragraph", widget: text, hint: "The large paragraph at the start of the homepage, below the portrait." }
           - name: lookingFor
-            label: "What I'm looking for (strip under the intro)"
+            label: "What I'm looking for"
             widget: list
+            required: false
+            hint: "The short notes beside the intro paragraph."
             fields:
               - { name: label, label: Label, widget: string }
               - { name: value, label: Value, widget: string }
-          - { name: location, label: Location, widget: string }
+          - { name: location, label: Location, widget: string, hint: "The part before the comma shows after the role and in the footer." }
           - { name: email, label: Email, widget: string }
           - { name: github, label: "GitHub URL", widget: string }
           - { name: linkedin, label: "LinkedIn URL", widget: string }
-          - { name: photo, label: Photo, widget: image }
+          - { name: photo, label: Photo, widget: image, hint: "The photo at the top of the homepage (the fallback for the portrait below)." }
+          - { name: portrait, label: "Portrait file name", widget: string, hint: "Path of the two-ink portrait without size or extension. The site adds -720.webp and -1200.webp, so both files must exist." }
           - { name: photoAlt, label: "Photo description (for screen readers)", widget: string }
-          - { name: cv, label: "CV (PDF)", widget: file }
-          - { name: about, label: About, widget: markdown }
-          - { name: skills, label: Skills, widget: list }
+          - { name: cv, label: "CV (PDF)", widget: file, hint: "The file behind every Download CV button." }
+          - name: coursework
+            label: "Coursework modules"
+            widget: list
+            required: false
+            hint: "Shown as the Coursework column in the skills table. Tools listed here count as evidence for that skill."
+            fields:
+              - { name: code, label: "Module code", widget: string }
+              - { name: title, label: "Module title", widget: string }
+              - { name: tech, label: "Tools used", widget: list }
+          - name: skillGroups
+            label: "Skills table"
+            widget: list
+            required: false
+            hint: "The skills section on the homepage. Every skill must appear in a project's tools or in coursework, and every tool used must be listed here, or the build stops."
+            fields:
+              - { name: name, label: "Group name", widget: string }
+              - { name: skills, label: Skills, widget: list }
+          - { name: workNote, label: "Work note", widget: text, required: false, hint: "The short paragraph at the top of the Experience section." }
       - name: cv
         label: "Education & work"
         file: content/cv.json
@@ -65,16 +116,30 @@ collections:
           - name: education
             label: Education
             widget: list
+            hint: "The first entry is the degree; the open placement year is shown straight after it."
             fields:
               - { name: title, label: Title, widget: string }
               - { name: org, label: "Where", widget: string }
-              - { name: dates, label: Dates, widget: string }
-              - { name: detail, label: Detail, widget: text, required: false }
+              - { name: dates, label: Dates, widget: string, hint: "Shown as typed." }
+              - { name: detail, label: Detail, widget: text, required: false, hint: "Kept for the CV; not shown on the site." }
+              - { name: start, label: "Start (YYYY-MM)", widget: string, required: false, hint: "Kept for the CV; not shown on the site." }
+              - { name: end, label: "End (YYYY-MM)", widget: string, required: false, hint: "Kept for the CV; not shown on the site." }
           - name: work
             label: Work
             widget: list
             fields:
               - { name: title, label: Title, widget: string }
               - { name: org, label: "Where", widget: string }
-              - { name: dates, label: Dates, widget: string }
-              - { name: detail, label: Detail, widget: text, required: false }
+              - { name: dates, label: Dates, widget: string, hint: "Shown as typed." }
+              - { name: detail, label: Detail, widget: text, required: false, hint: "Kept for the CV; not shown on the site." }
+              - { name: start, label: "Start (YYYY-MM)", widget: string, required: false, hint: "Kept for the CV; not shown on the site." }
+              - { name: end, label: "End (YYYY-MM)", widget: string, required: false, hint: "Kept for the CV; not shown on the site." }
+          - name: placement
+            label: "Placement year"
+            widget: object
+            hint: "The open placement entry in Experience, straight after the degree."
+            fields:
+              - { name: label, label: Label, widget: string }
+              - { name: note, label: Note, widget: string, hint: "The small word after the label, e.g. open." }
+              - { name: start, label: "Start (YYYY-MM)", widget: string, hint: "Only the year is shown." }
+              - { name: end, label: "End (YYYY-MM)", widget: string, hint: "Only the year is shown." }

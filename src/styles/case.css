@@ -1,0 +1,67 @@
+@layer pages {
+  /* ---------- a project's own page: cobalt head, then the paper sheet ---------- */
+  .case__head { background: var(--cobalt); color: #fff; --focus: var(--sun); padding: clamp(2rem, 5vw, 4rem) var(--margin) calc(clamp(2.5rem, 6vw, 4.5rem) + 1.5rem); }
+  .case .sheet { margin-top: -1.5rem; }
+  .case__title { font-size: clamp(3rem, 1rem + 9.5vw, 9.5rem); margin: 0 0 1.2rem -0.03em; }
+  /* The clipped edge is the mask the title rises out of (motion.css); the padding keeps descenders inside it. */
+  .case__title .rise { display: block; overflow: clip; }
+  .case__title .rise > span { display: block; padding-bottom: 0.1em; }
+  .case__summary { font-size: var(--text-l); font-weight: 500; line-height: 1.16; letter-spacing: -0.02em; max-width: 30ch; text-wrap: balance; }
+  .colophon .case__summary { max-width: 38ch; }
+  .case__context { margin-top: 1rem; color: rgb(255 255 255 / 85%); }
+  .case__links { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.75rem; margin-top: 1.75rem; }
+
+  /* ---------- overview: screenshot and facts ---------- */
+  .case__open { row-gap: 2rem; }
+  .case__facts { display: grid; gap: 1.75rem; }
+  .case__facts dt { font-size: var(--text-s); font-weight: 400; color: var(--quiet); margin-bottom: 0.4rem; }
+  .case__facts dd { font-weight: 500; }
+  .case__facts .proof { gap: 0.6rem; font-size: var(--text-s); line-height: 1.4; }
+
+  /* ---------- text with a contents list beside it ---------- */
+  .case__layout { padding-bottom: var(--section); }
+  .case__toc { display: none; font-size: var(--text-s); }
+  .case__toc .subhead { font-size: var(--text-s); margin-bottom: 0.6rem; }
+  .case__toc li + li { margin-top: 0.15rem; }
+  .case__toc a { display: block; padding: 0.3rem 0; color: var(--quiet); text-decoration: none; }
+  .case__toc a:hover { color: var(--fg); }
+
+  /* ---------- next project ---------- */
+  .next { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1.5rem; padding: var(--section) var(--margin); background: var(--cobalt); color: #fff; --focus: var(--sun); }
+  .next__link { display: grid; gap: 0.75rem; text-decoration: none; min-width: 0; }
+  .next__link span { color: rgb(255 255 255 / 85%); }
+  .next__link strong { width: fit-content; max-width: 100%; font-size: clamp(3rem, 1rem + 9.5vw, 9.5rem); line-height: 0.92; padding-bottom: 0.08em; overflow-wrap: anywhere; }
+  .next__link:hover strong { background-size: 100% 4px; }
+
+  @media (min-width: 60rem) {
+    .case__stage { grid-column: 1 / 9; }
+    .case__facts { grid-column: 9 / -1; align-self: end; }
+    .case__open:not(:has(.case__stage)) .case__facts { grid-column: 1 / -1; }
+    .case__toc { display: block; grid-column: 1 / 4; position: sticky; top: calc(var(--bar) + 1.5rem); align-self: start; }
+    .case__body { grid-column: 5 / 12; }
+  }
+
+  /* ---------- exhibits: the figure each featured project carries on its page ---------- */
+  .flow { container-type: inline-size; }
+  .flow__steps { position: relative; display: grid; gap: 1.4rem; }
+  .flow__steps::before { content: ''; position: absolute; top: 0.3rem; bottom: 0.3rem; left: calc(0.3rem - 1px); width: 2px; background: var(--fg); transform-origin: top; }
+  .flow__step { position: relative; padding-left: 1.6rem; }
+  .flow__step::before { content: ''; position: absolute; top: 0; left: 0; width: 0.6rem; height: 0.6rem; background: var(--fg); }
+  .flow__step:last-child::before { background: var(--sun); z-index: 1; }
+  /* The line ends at the last marker: the final step paints paper over whatever runs past it. */
+  .flow__step:last-child::after { content: ''; position: absolute; top: 0.6rem; bottom: 0; left: 0; width: 0.6rem; background: var(--bg); }
+  .flow__step strong { font-size: var(--text-m); line-height: 1.2; }
+  .flow__step span { display: grid; gap: 0.3rem; margin-top: 0.3rem; font-size: var(--text-s); line-height: 1.4; color: var(--quiet); }
+  @container (min-width: 44rem) {
+    .flow__steps { grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 0 var(--gutter); }
+    .flow__steps::before { top: calc(0.3rem - 1px); bottom: auto; left: 0; right: 0; width: auto; height: 2px; transform-origin: left; }
+    .flow__step { padding: 1.6rem 0 0; }
+    .flow__step::before { top: 0; }
+    .flow__step:last-child::after { top: 0; bottom: auto; left: 0.6rem; right: 0; width: auto; height: 0.6rem; }
+  }
+
+  .roles__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 2rem var(--gutter); }
+  .roles__role { border-top: 2px solid var(--fg); padding-top: 0.9rem; }
+  .roles__role h3 { font-size: var(--text-m); margin-bottom: 0.5rem; }
+  .roles__role li { font-size: var(--text-m); padding-block: 0.55rem; border-top: 1px solid color-mix(in srgb, var(--fg) 14%, transparent); }
+}

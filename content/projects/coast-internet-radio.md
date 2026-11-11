@@ -1,5 +1,6 @@
 ---
 title: "Coast Internet Radio"
+short: "Coast"
 summary: "A website for a radio station in Newry, with live listening, track information and an editor the presenter can use himself."
 tech: ["HTML", "CSS", "JavaScript", "Netlify Functions", "Cloudflare Workers", "Python", "Flask", "SQLAlchemy", "pytest"]
 links:
@@ -13,9 +14,18 @@ proof:
   - "Live at coastinternetradio.com, with a request board the presenter uses on air"
   - "Signed webhooks, CSRF tokens and a Content-Security-Policy on the request board"
   - "24 site tests and 37 pytest tests"
+context: "For a radio station in Newry"
+exhibit:
+  type: flow
+  caption: "How a song request reaches the presenter"
+  steps:
+    - { label: "Listener", text: "fills in the request form on the station's site" }
+    - { label: "Netlify Forms", text: "emails the station and sends a signed webhook" }
+    - { label: "Flask app", text: "checks the signature and refuses anything unsigned" }
+    - { label: "SQLite", text: "stores the request through SQLAlchemy" }
+    - { label: "Presenter", text: "works down the board and taps Played" }
 featured: true
 order: 1
-draft: false
 ---
 Coast Internet Radio is a small station in Newry run by a family member, playing country, Irish country and classic hits 24 hours a day. Most of its listeners are older and not very confident with technology, so the site has to be simple to use.
 

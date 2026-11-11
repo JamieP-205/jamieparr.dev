@@ -1,5 +1,6 @@
 ---
 title: "EOS Delivery System"
+short: "EOS"
 summary: "A C# desktop app for calculating delivery quotes and producing invoices, with input validation, discounts and print preview."
 tech: ["C#", ".NET 10", "Windows Forms", "GitHub Actions"]
 links:
@@ -9,9 +10,9 @@ links:
 access: "Browser version of the Windows app, running its own calculation code. Press Fill demo login, then Auto Fill and EOS Invoice."
 image: "/uploads/projects/eos-app.webp"
 imageAlt: "The EOS Delivery System window with customer details, package options and an itemised invoice"
+context: "Based on college coursework at SRC Newry"
 featured: false
 order: 4
-draft: false
 ---
 A Windows Forms app based on my EOS coursework at SRC Newry. You enter the customer and package details, calculate the price, then save or print the invoice.
 

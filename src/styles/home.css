@@ -1,0 +1,152 @@
+@layer pages {
+  /* ---------- the 12-column grid every homepage section is laid on ---------- */
+  .grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); padding: var(--section) var(--margin) 0; }
+  /* Sections nest subgrids on the same columns. Everything spans the full width until a wider screen says otherwise. */
+  .grid > *, .feature > *, .pairs > *, .rows > *, .row > *, .skills__groups > * { grid-column: 1 / -1; }
+
+  /* Section headings. The clipped edge is the mask they rise out of (motion.css); the padding keeps descenders inside it. */
+  .title { font-size: var(--text-l); overflow: clip; margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+  .title > span { display: block; padding-bottom: 0.12em; }
+
+  /* List headings inside a section. */
+  .subhead { font-size: var(--text-m); font-weight: 400; color: var(--quiet); margin-bottom: 0.75rem; }
+
+  /* ---------- hero: the one statement piece ---------- */
+  .hero { background: var(--cobalt); color: #fff; --focus: var(--sun); }
+  .hero__inner {
+    /* The portrait's size, worked out against this box (cqw) and never taller than the hero. */
+    --photo: min(66cqw, 100svh - var(--bar));
+    position: relative; overflow: clip; container-type: inline-size;
+    display: grid; align-content: end; min-height: calc(100svh - var(--bar));
+    padding: 2rem var(--margin) clamp(2rem, 6svh, 4rem);
+  }
+  /* It runs a little past the right edge: only backdrop is lost, and the copy gains room.
+     The extra pixel at the bottom hides a pale seam Chrome draws along the masked image's last row. */
+  .hero__photo { position: absolute; right: calc(var(--photo) * -0.12); bottom: -1px; width: var(--photo); }
+  /* Its backdrop is the page's own cobalt, so softening the left and top edges leaves no seam. */
+  .hero__photo img {
+    width: 100%;
+    mask-image: linear-gradient(to right, transparent, #000 30%), linear-gradient(to bottom, transparent, #000 14%);
+    mask-composite: intersect;
+  }
+  .hero__copy { position: relative; }
+  /* Everything under the name stays left of the photograph. */
+  .hero__copy > :not(.hero__name) { max-width: calc(100cqw + var(--margin) - 0.88 * var(--photo) - var(--gutter)); }
+  .hero__name { font-size: var(--text-xl); white-space: nowrap; margin: 0 0 clamp(1.25rem, 3svh, 2rem) -0.05em; }
+  .hero__line { display: block; overflow: clip; margin-bottom: -0.1em; }
+  .hero__line > span { display: block; padding-bottom: 0.1em; }
+  .hero__role { font-weight: 500; }
+  .hero__status { color: rgb(255 255 255 / 85%); margin-bottom: 1.5rem; }
+  .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.75rem; }
+
+  /* ---------- the paper sheet that carries the rest of the page ---------- */
+  .sheet { position: relative; z-index: 1; background: var(--bg); border-radius: 1.5rem 1.5rem 0 0; }
+
+  /* ---------- introduction ---------- */
+  .intro { row-gap: 2rem; align-items: end; }
+  .intro__lead { font-size: var(--text-l); font-weight: 500; line-height: 1.16; letter-spacing: -0.02em; max-width: 30ch; text-wrap: balance; }
+  .intro__aside { display: grid; gap: 0.9em; font-size: var(--text-s); max-width: 26rem; }
+
+  /* ---------- work ---------- */
+  /* The screenshot on a plain stage, at its own proportions: nothing is cropped. */
+  .stage { display: block; padding: clamp(1rem, 5%, 3.25rem); background: var(--stage); border-radius: 14px; }
+  .stage__frame { display: block; overflow: clip; border-radius: 4px; box-shadow: 0 1px 2px rgb(0 0 0 / 8%), 0 18px 40px -18px rgb(0 0 0 / 35%); }
+  .stage__img { width: 100%; }
+
+  .feature, .pairs, .rows, .row { display: grid; grid-template-columns: subgrid; }
+  .pairs, .rows { margin-top: clamp(4rem, 6vw, 5rem); }
+  .feature { row-gap: 1.5rem; }
+  .feature__title { font-size: var(--text-l); margin-bottom: 0.6rem; }
+  .feature__summary { margin-top: 1rem; max-width: 30rem; }
+  .feature__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 1.75rem; }
+  .feature .proof { grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 0.75rem var(--gutter); font-size: var(--text-s); }
+
+  .pairs { row-gap: 4rem; }
+  /* Both stages share one shape, so the two titles line up whatever the screenshots' proportions. */
+  .pair .stage { display: grid; place-items: center; aspect-ratio: 7 / 5; margin-bottom: 1.5rem; }
+  .pair__title { font-size: var(--text-l); margin-bottom: 0.5rem; }
+  .pair p + p { margin-top: 0.75rem; }
+
+  /* The smaller projects: ruled rows, each with a title big enough to scan. */
+  .rows { border-bottom: 1px solid var(--rule); }
+  .row { row-gap: 0.5rem; padding-block: 1.75rem; border-top: 1px solid var(--rule); }
+  .row__title { font-size: clamp(1.4rem, 1.1rem + 0.9vw, 1.9rem); }
+  .row__tech { margin-top: 0.5rem; font-size: var(--text-s); color: var(--quiet); }
+
+  /* ---------- skills ---------- */
+  .skills { align-items: start; }
+  .skills__note { color: var(--quiet); max-width: 30rem; margin-bottom: 2.5rem; }
+  .skills__groups { display: grid; grid-template-columns: subgrid; row-gap: 2.25rem; }
+  .skills__group dl > div { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); align-items: baseline; gap: 1rem; padding-block: 0.25rem; }
+  .skills dt { font-weight: 620; }
+  .skills dd { font-size: var(--text-s); color: var(--quiet); }
+
+  /* ---------- experience ---------- */
+  .experience__note { font-size: var(--text-s); max-width: 34rem; margin-bottom: 3rem; }
+  .experience__list + .experience__list { margin-top: 2.5rem; }
+  .experience__list li { display: grid; grid-template-columns: 10rem minmax(0, 1fr); gap: 0.15rem 1rem; padding-block: 0.5rem; }
+  .experience__list strong { display: block; }
+  .experience__list p span { color: var(--quiet); }
+  .dates { padding-top: 0.2em; font-size: var(--text-s); color: var(--quiet); font-variant-numeric: tabular-nums; }
+  /* The open placement year: the one spot of yellow in the section. */
+  .is-open strong::before { content: ''; display: inline-block; width: 0.6em; height: 0.6em; margin-right: 0.5em; background: var(--sun); }
+
+  /* ---------- contact ---------- */
+  .contact { row-gap: 3rem; margin-top: var(--section); padding-bottom: var(--section); background: var(--cobalt); color: #fff; --focus: var(--sun); }
+  .contact__mail { font-size: var(--text-l); overflow-wrap: anywhere; margin-block: 1.75rem 1.25rem; }
+  .contact__links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+  .form { display: grid; gap: 1rem; align-content: start; }
+  .form label { display: grid; gap: 0.35rem; font-size: var(--text-s); }
+  .form input, .form textarea { width: 100%; padding: 0.7rem 0.8rem; border: 0; border-radius: var(--radius); background: #fff; color: var(--ink); font-size: 1rem; }
+  .form textarea { resize: vertical; min-height: 7rem; }
+  .form__trap { position: absolute; left: -9999px; }
+  .form #contact-help { font-size: var(--text-s); color: rgb(255 255 255 / 85%); }
+  .form .btn { justify-self: start; }
+  .form__status { min-height: 1.5em; font-weight: 620; }
+
+  /* ---------- wider screens: the 12-column layout ---------- */
+  @media (min-width: 60rem) {
+    .intro__lead { grid-column: 1 / span 9; }
+    .intro__aside { grid-column: 10 / span 3; }
+    .feature .stage { grid-column: 1 / span 8; }
+    .feature__text { grid-column: 9 / span 4; align-self: end; }
+    .feature .proof { grid-column: 1 / span 8; }
+    .row__title { grid-column: 1 / span 4; }
+    .row__text { grid-column: 5 / span 6; }
+    .row__link { grid-column: 11 / span 2; justify-self: end; }
+    .row { align-items: baseline; }
+    /* Skills: the heading holds the left third while the list runs in two columns beside it. */
+    .skills__head { grid-column: 1 / span 4; }
+    .skills__groups { grid-column: 5 / -1; }
+    .skills__group { grid-column: span 4; }
+    /* Experience: the note sits level with the heading, the two lists side by side under both. */
+    .experience .title { grid-column: 1 / span 6; align-self: end; }
+    .experience__note { grid-column: 7 / span 6; grid-row: 1; align-self: end; }
+    .experience__list { grid-column: span 6; }
+    .experience__list + .experience__list { margin-top: 0; }
+    .contact__intro { grid-column: 1 / span 6; }
+    .form { grid-column: 8 / span 5; }
+  }
+  @media (min-width: 46.01rem) {
+    .pair { grid-column: span 6; }
+  }
+
+  /* ---------- phones, and any screen taller than it is wide ---------- */
+  @media (max-width: 46rem), (orientation: portrait) {
+    .hero__inner { display: flex; flex-direction: column; min-height: 0; padding: 1.25rem 0 2.5rem; }
+    .hero__copy { display: contents; }
+    /* Sized against the height too, so a tablet held upright still shows the actions on the first screen. */
+    .hero__name { order: 1; position: relative; z-index: 1; font-size: min(26vw, 15svh); padding-inline: var(--margin); margin-bottom: 0; }
+    .hero__photo { order: 2; position: static; align-self: end; width: min(100%, 52svh); margin-top: -7vw; }
+    .hero__copy > :not(.hero__name) { order: 3; max-width: none; padding-inline: var(--margin); }
+    /* The photograph fades out at the bottom as well, so the suit never ends on a hard edge, and the copy tucks up into the fade. */
+    .hero__photo img { mask-image: linear-gradient(to right, transparent, #000 30%), linear-gradient(to bottom, transparent, #000 14%, #000 78%, transparent); }
+    .hero__role { position: relative; margin-top: -1.75rem; }
+  }
+  @media (max-width: 46rem) {
+    .bar nav { display: none; }
+  }
+  @media (max-width: 30rem) {
+    .experience__list li { grid-template-columns: minmax(0, 1fr); }
+  }
+}

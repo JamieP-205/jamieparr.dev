@@ -1,0 +1,32 @@
+@layer pages {
+  /* ---------- Armagh annual chart: the readout is also the key ---------- */
+  .chart__head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem var(--gutter); margin-bottom: 1.5rem; }
+  .chart__head .title { margin-bottom: 0; max-width: 22ch; }
+  .chart__readout { display: grid; justify-items: start; gap: 0.2rem; min-width: 16rem; font-variant-numeric: tabular-nums; }
+  .chart__year { font-size: var(--text-l); }
+  .chart__value { display: flex; align-items: center; gap: 0.6rem; font-size: var(--text-m); }
+  .chart__value b { font-weight: 620; }
+  .chart__key { width: 1.1rem; height: 3px; border-radius: 2px; background: var(--fg); }
+  .chart__value--max .chart__key { background: var(--accent); }
+
+  .chart__plot { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: clamp(14rem, 34vw, 27rem) auto; column-gap: 0.6rem; cursor: crosshair; }
+  .chart__y { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; justify-content: space-between; text-align: right; font-size: var(--text-s); color: var(--quiet); font-variant-numeric: tabular-nums; }
+  .chart__y span { height: 0; line-height: 0; }
+  .chart__lines, .chart__over { grid-column: 2; grid-row: 1; width: 100%; height: 100%; overflow: visible; }
+  .chart__over { pointer-events: none; }
+  .chart__x { grid-column: 2; grid-row: 2; width: 100%; height: 1.6rem; overflow: visible; }
+  .chart__x text { fill: var(--quiet); font-size: var(--text-s); font-family: var(--font); font-variant-numeric: tabular-nums; }
+
+  .chart__line { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+  .chart__line--max { stroke: var(--accent); }
+  .chart__line--min { stroke: var(--fg); }
+  .chart__grid { stroke: color-mix(in srgb, var(--fg) 14%, transparent); stroke-width: 1; vector-effect: non-scaling-stroke; }
+  .chart__gap { fill: color-mix(in srgb, var(--fg) 7%, transparent); }
+  .chart__cursor { stroke: var(--fg); stroke-width: 1.5; }
+  .chart__dot { stroke: var(--bg); stroke-width: 2; }
+  .chart__dot--max { fill: var(--accent); }
+  .chart__dot--min { fill: var(--fg); }
+  .chart__note { margin-top: 0.9rem; font-size: var(--text-s); color: var(--quiet); }
+  /* On a phone the last two year labels would collide, so 2000 steps aside. */
+  @media (max-width: 40rem) { .chart__x text:nth-last-child(2) { display: none; } }
+}

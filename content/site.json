@@ -8,19 +8,11 @@
   "lookingFor": [
     {
       "label": "Looking for",
-      "value": "A 12-month placement in software, web development or IT"
-    },
-    {
-      "label": "When",
-      "value": "From summer 2027, for my placement year"
-    },
-    {
-      "label": "Where",
-      "value": "Based in Belfast and willing to relocate"
+      "value": "a 12-month placement in software, web development or IT, from summer 2027. Based in Belfast and willing to relocate."
     },
     {
       "label": "Right now",
-      "value": "Year 2: Java, Python with Flask and SQLAlchemy, and an Agile team project"
+      "value": "Year 2: Java, Python with Flask and SQLAlchemy, and an Agile team project."
     }
   ],
   "email": "jamieparr205@gmail.com",
@@ -29,24 +21,84 @@
   "photo": "/uploads/jamie-parr.jpg",
   "photoAlt": "Jamie Parr in a navy suit and tie",
   "cv": "/uploads/Jamie-Parr-CV.pdf",
-  "about": "I'm a second-year Computing Technologies student at Ulster University in Belfast.\n\nMost of what I know I've learned by building real things for real people. I build and maintain the website for a small internet radio station in Newry, made for older listeners who aren't confident with technology. I also built a Flask app the presenter uses on air to take song requests.\n\nI've worked part-time alongside my studies since 2021, in warehouses, kitchens and on a production line. That work taught me to stay calm when things break and to finish the job properly.",
-  "skills": [
-    "HTML",
-    "CSS",
-    "JavaScript",
-    "jQuery",
-    "C#",
-    "Node.js",
-    "Python",
-    "Flask",
-    "SQLAlchemy",
-    "SQLite",
-    "Excel",
-    "Git & GitHub",
-    "GitHub Actions",
-    "Cloudflare Workers",
-    "Netlify",
-    "pytest",
-    "Playwright"
-  ]
+  "portrait": "/uploads/jamie-parr-duotone",
+  "coursework": [
+    {
+      "code": "CMP328",
+      "title": "Database Interface Development",
+      "tech": [
+        "Python",
+        "Flask",
+        "SQLAlchemy"
+      ]
+    },
+    {
+      "code": "COM410",
+      "title": "Programming in Practice",
+      "tech": [
+        "Java"
+      ]
+    },
+    {
+      "code": "COM106",
+      "title": "Introduction to Databases",
+      "tech": [
+        "SQL"
+      ]
+    },
+    {
+      "code": "COM161",
+      "title": "Problem Solving for Computing",
+      "tech": [
+        "Python"
+      ]
+    }
+  ],
+  "skillGroups": [
+    {
+      "name": "Languages",
+      "skills": [
+        "Python",
+        "Java",
+        "JavaScript",
+        "C#",
+        "SQL",
+        "HTML",
+        "CSS"
+      ]
+    },
+    {
+      "name": "Frameworks and data",
+      "skills": [
+        "Flask",
+        "SQLAlchemy",
+        "Spring Boot",
+        "Spring Security",
+        "Thymeleaf",
+        "jQuery",
+        ".NET 10",
+        "Windows Forms",
+        "H2",
+        "Excel",
+        "CSV"
+      ]
+    },
+    {
+      "name": "Testing and delivery",
+      "skills": [
+        "pytest",
+        "unittest",
+        "GitHub Actions"
+      ]
+    },
+    {
+      "name": "Hosting",
+      "skills": [
+        "Netlify Functions",
+        "Cloudflare Workers"
+      ]
+    }
+  ],
+  "lead": "I'm a second-year Computing Technologies student at Ulster University in Belfast. Most of what I know I've learned by building real things for real people.",
+  "workNote": "I've worked part-time alongside my studies since 2021, in warehouses, kitchens and on a production line. That work taught me to stay calm when things break and to finish the job properly."
 }

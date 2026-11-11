@@ -5,7 +5,7 @@
   const valid = value => ['light', 'dark'].includes(value) ? value : 'system';
   const system = window.matchMedia('(prefers-color-scheme: dark)');
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const defaults = () => ({ largeText: false, contrast: false, reduceMotion: false, hidePattern: false });
+  const defaults = () => ({ largeText: false, contrast: false, reduceMotion: false });
   let choice = 'system', preferences = defaults();
   function read() {
     choice = 'system'; preferences = defaults();
@@ -30,12 +30,6 @@
     attr('data-large-text', preferences.largeText ? 'true' : null);
     attr('data-contrast', preferences.contrast ? 'more' : null);
     attr('data-reduce-motion', preferences.reduceMotion || motion.matches ? 'true' : null);
-    attr('data-hide-pattern', preferences.hidePattern ? 'true' : null);
-    const dark = choice === 'dark' || (choice === 'system' && system.matches);
-    document.querySelectorAll('meta[name="theme-color"]').forEach(meta => {
-      meta.content = dark ? '#111316' : '#f6f5f1';
-      meta.removeAttribute('media');
-    });
     document.querySelectorAll('input[name="colour-theme"]').forEach(input => { input.checked = input.value === choice; });
     document.querySelectorAll('[data-preference]').forEach(input => {
       const name = input.dataset.preference;

@@ -1,5 +1,6 @@
 ---
 title: "Armagh Weather Analysis"
+short: "Armagh"
 summary: "An Excel and Python analysis of Armagh weather records, covering temperature, rainfall, sunshine and frost."
 tech: ["Python", "Excel", "CSV", "unittest"]
 links:
@@ -11,9 +12,13 @@ proof:
   - "2,028 monthly records, from 1853 to 2021"
   - "Missing readings kept separate from real zeros"
   - "Eight unit tests on the data handling"
+context: "College coursework at SRC Newry"
+exhibit:
+  type: chart
+  data: armagh-annual
+  caption: "Annual mean temperature at Armagh Observatory, complete years only"
 featured: true
 order: 3
-draft: false
 ---
 Records from Armagh Observatory, **2,028 monthly rows from January 1853 to December 2021**, analysed for my SRC Newry Big Data and Business Analytics course. It includes an Excel workbook with ten sheets and 32 charts, a Python analysis, CSV downloads and a browser report with charts and a coverage table.
 

@@ -1,8 +1,7 @@
-import '@fontsource/ibm-plex-sans/400.css';
-import '@fontsource/ibm-plex-sans/600.css';
+import '@fontsource-variable/bricolage-grotesque/wdth.css';
 import '@fontsource/ibm-plex-mono/400.css';
-import '@fontsource/ibm-plex-mono/500.css';
 import './styles.css';
+import './chart.js';
 
 // Only confirm success after the server has accepted the email for delivery.
 const form = document.getElementById('contact-form');

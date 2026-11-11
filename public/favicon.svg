@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <title>Jamie Parr</title>
-  <rect width="32" height="32" rx="7" fill="#0f6b52"/>
-  <path d="M7 7h8v13c0 4-2 6-6 6s-6-2-6-6h4c0 1.5.5 2 2 2s2-.5 2-2V11H7Z" fill="#f6f5f1"/>
-  <path d="M18 7h5c4 0 6 2 6 6s-2 6-6 6h-1v7h-4Zm4 4v4h1c1.5 0 2-.5 2-2s-.5-2-2-2Z" fill="#efb27e" fill-rule="evenodd"/>
+  <rect width="32" height="32" rx="5" fill="#2947ec"/>
+  <path d="M7 7h8v13c0 4-2 6-6 6s-6-2-6-6h4c0 1.5.5 2 2 2s2-.5 2-2V11H7Z" fill="#ffffff"/>
+  <path d="M18 7h5c4 0 6 2 6 6s-2 6-6 6h-1v7h-4Zm4 4v4h1c1.5 0 2-.5 2-2s-.5-2-2-2Z" fill="#ffd400" fill-rule="evenodd"/>
 </svg>

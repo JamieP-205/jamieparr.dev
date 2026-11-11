@@ -11,7 +11,7 @@ function browser({ stored = null, prefs = null, dark = false, reduced = false, b
   const summary = { focus() { focused = true; } };
   const settings = { hidden: true, open: false, querySelector: () => summary, contains: node => node?.inside === true, addEventListener: (type,fn) => { settingsEvents[type]=fn; } };
   const radios = ['system','light','dark'].map(value => ({name:'colour-theme',value,checked:false,dataset:{}}));
-  const checks = ['largeText','contrast','reduceMotion','hidePattern'].map(name => ({dataset:{preference:name},checked:false,disabled:false}));
+  const checks = ['largeText','contrast','reduceMotion'].map(name => ({dataset:{preference:name},checked:false,disabled:false}));
   const media = value => ({ matches: value, addEventListener(_,fn) { this.change=fn; } });
   const system=media(dark),motion=media(reduced);
   const metas=[0,1].map(()=>({content:'',removeAttribute(){}}));
@@ -34,17 +34,17 @@ function browser({ stored = null, prefs = null, dark = false, reduced = false, b
 }
 
 test('defaults to system, responds to device changes and persists manual theme',()=>{
-  const page=browser();assert.equal(page.settings.hidden,false);assert.equal(page.metas[0].content,'#f6f5f1');
-  page.system.matches=true;page.system.change();assert.equal(page.metas[0].content,'#111316');
-  page.choose('light');assert.equal(page.attrs['data-theme'],'light');assert.equal(page.metas[0].content,'#f6f5f1');
+  const page=browser();assert.equal(page.settings.hidden,false);
+  page.system.matches=true;page.system.change();
+  page.choose('light');assert.equal(page.attrs['data-theme'],'light');
   const next=browser({stored:page.storage.get('jamie-parr-theme'),dark:true});assert.equal(next.radios[1].checked,true);
   next.choose('dark');assert.equal(next.attrs['data-theme'],'dark');
   next.choose('system');assert.equal(next.attrs['data-theme'],undefined);
 });
 test('all accessibility preferences survive page navigation and reset cleanly',()=>{
-  const page=browser();for(const name of ['largeText','contrast','reduceMotion','hidePattern'])page.toggle(name,true);
+  const page=browser();for(const name of ['largeText','contrast','reduceMotion'])page.toggle(name,true);
   const next=browser({prefs:page.storage.get('jamie-parr-accessibility')});
-  for(const key of ['data-large-text','data-reduce-motion','data-hide-pattern'])assert.equal(next.attrs[key],'true');
+  for(const key of ['data-large-text','data-reduce-motion'])assert.equal(next.attrs[key],'true');
   assert.equal(next.attrs['data-contrast'],'more');
   assert(next.checks.every(c=>c.checked));next.choose('dark');next.reset();
   assert.deepEqual(next.attrs,{});assert.equal(next.storage.size,0);assert(next.checks.every(c=>!c.checked));

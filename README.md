@@ -6,10 +6,11 @@ The site includes project demos, a downloadable CV, a contact form, light and da
 
 ## Stack
 
-- HTML, CSS and JavaScript, with Vite generating the pages at build time.
+- HTML, CSS and JavaScript, with Vite generating every page at build time. No framework.
 - JSON and Markdown content files, with Sveltia CMS available locally.
 - Cloudflare Workers and static assets, with Email Routing for the contact form.
-- Node's test runner for contact handling and browser preferences.
+- Security headers, including a Content-Security-Policy with no inline scripts or styles, in `public/_headers`.
+- Node's test runner for the contact form, display settings, skills list, Armagh chart, security headers and page weight.
 
 ## Run locally
 
@@ -23,19 +24,27 @@ npm run dev
 Open the address printed by the development server. The local content editor is at `/admin/`; it is excluded from the deployed site.
 
 ```sh
-npm test
 npx vite build --mode live
+npm test
 ```
 
 ## Content
 
-- `content/site.json`: profile, navigation and links.
+- `content/site.json`: profile, links, skill groups and coursework modules.
 - `content/cv.json`: education and work experience.
-- `content/projects/`: Markdown case studies.
+- `content/projects/`: Markdown case studies. Each one becomes a page at `/projects/<name>/`.
+- `content/data/`: the annual Armagh figures behind the chart.
 - `public/uploads/`: public CV, images and walkthrough videos.
-- `src/render.mjs`: page generation.
-- `src/styles.css` and `public/theme.js`: presentation and preferences.
-- `src/contact.mjs`: validated, rate-limited contact form handling.
+
+## Code
+
+- `src/render.mjs`: turns the content files into HTML at build time.
+- `src/lib/`: the skills list, the Armagh chart and image sizes, each worked out at build time.
+- `src/styles/`: one stylesheet per concern (`base`, `home`, `case`, `chart`, `motion`), ordered by cascade layers in `src/styles.css`.
+- `src/main.js` and `src/chart.js`: the contact form and the chart readout. `public/theme.js`: display settings.
+- `src/contact.mjs` and `src/worker.js`: validated, rate-limited contact form handling.
+- `tests/`: run with `npm test`. `site.test.mjs` checks the built site, so build first.
+- `DESIGN.md`: the design direction and the reasons behind it.
 
 ## Deployment
 

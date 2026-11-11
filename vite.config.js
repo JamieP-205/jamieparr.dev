@@ -2,7 +2,8 @@ import { cloudflare } from '@cloudflare/vite-plugin';
 import { defineConfig } from 'vite';
 import fs from 'node:fs';
 import path from 'node:path';
-import { loadContent, renderBody, renderProjectPage, analyticsTag, projectUrl, absolute, topbar } from './src/render.mjs';
+import zlib from 'node:zlib';
+import { loadContent, renderBody, renderProjectPage, renderColophon, analyticsTag, speculationTag, projectUrl, absolute, topbar } from './src/render.mjs';
 
 // Pre-renders every page from /content at build time, so visitors get plain HTML.
 // `live` is true for `cf deploy --mode live` (public) and false for staging (noindex).
@@ -20,8 +21,9 @@ const content = () => ({
     const { site } = data;
     return html
       .replace('<!--noindex-->', live ? '' : '<meta name="robots" content="noindex, nofollow">')
+      .replace('<!--speculation-->', speculationTag)
       .replace('<!--analytics-->', analyticsTag(site))
-      .replace('<!--topbar-->', topbar(false))
+      .replace('<!--topbar-->', topbar(false, site))
       .replaceAll('%SITE_URL%', site.url.replace(/\/$/, ''))
       .replaceAll('%HEADLINE%', site.headline.replace(/"/g, '&quot;'))
       .replace('<!--app-->', renderBody(data));
@@ -30,25 +32,39 @@ const content = () => ({
   configureServer(server) {
     // The editor (/admin) exists only on this machine, in dev. It's never built or deployed.
     server.middlewares.use('/admin', serveCms);
-    // Project pages, rendered on request in dev so edits show up immediately.
+    // Project pages and the colophon, rendered on request in dev so edits show up immediately.
     server.middlewares.use(async (req, res, next) => {
       const pathname = (req.url || '').split('?')[0];
-      const m = pathname.match(/^\/projects\/([a-z0-9-]+)\/?$/);
+      const m = pathname.match(/^\/(?:projects\/([a-z0-9-]+)|(colophon))\/?$/);
       if (!m) return next();
       const data = loadContent();
-      const p = data.projects.find((x) => x.slug === m[1]);
-      if (!p) return next();
-      if (!pathname.endsWith('/')) { res.statusCode = 301; res.setHeader('location', projectUrl(p)); return res.end(); }
-      const html = await server.transformIndexHtml(req.url, renderProjectPage(p, data, { assets: DEV_ASSETS, noindex: true }));
+      const p = m[1] && data.projects.find((x) => x.slug === m[1]);
+      if (m[1] && !p) return next();
+      if (!pathname.endsWith('/')) { res.statusCode = 301; res.setHeader('location', `${pathname}/`); return res.end(); }
+      const opts = { assets: DEV_ASSETS, noindex: true };
+      const html = await server.transformIndexHtml(req.url, p ? renderProjectPage(p, data, opts) : renderColophon(data, opts));
       res.setHeader('content-type', 'text/html; charset=utf-8');
       res.end(html);
     });
     server.watcher.add(path.resolve('content'));
-    server.watcher.on('change', (f) => f.includes(`${path.sep}content${path.sep}`) && server.ws.send({ type: 'full-reload' }));
+    server.watcher.on('change', (f) => {
+      if (f.includes(`${path.sep}content${path.sep}`)) server.ws.send({ type: 'full-reload' });
+    });
   },
 });
 
-// Project pages, robots.txt and the sitemap are emitted straight into the build.
+// The one font file every page needs straight away. Preloading it stops the big headings changing face after first paint.
+const fontPreload = (bundle) => {
+  const font = Object.keys(bundle).find((f) => /bricolage-grotesque-latin-wdth-normal.*\.woff2$/.test(f));
+  return font ? `<link rel="preload" as="font" type="font/woff2" href="/${font}" crossorigin>` : '';
+};
+
+const preload = () => ({
+  name: 'font-preload',
+  transformIndexHtml: { order: 'post', handler: (html, ctx) => (ctx.bundle ? html.replace('<!--preload-->', fontPreload(ctx.bundle)) : html) },
+});
+
+// Project pages, the colophon, robots.txt and the sitemap are emitted straight into the build.
 // `enforce: 'post'` so this runs after Vite's CSS plugin has produced the stylesheet.
 const pages = () => ({
   name: 'content-pages',
@@ -67,18 +83,31 @@ const pages = () => ({
     }
     if (!entry || !cssFiles.length) throw new Error(`content-pages: could not find the built JS/CSS (entry: ${entry?.fileName}, css: ${cssFiles})`);
     const assets = [
+      fontPreload(bundle),
       ...cssFiles.map((f) => `<link rel="stylesheet" crossorigin href="/${f}">`),
       `<script type="module" crossorigin src="/${entry.fileName}"></script>`,
-    ].join('\n  ');
+    ].filter(Boolean).join('\n  ');
+    const opts = { assets, noindex: !live };
     for (const p of projects) {
-      this.emitFile({ type: 'asset', fileName: `projects/${p.slug}/index.html`, source: renderProjectPage(p, data, { assets, noindex: !live }) });
+      this.emitFile({ type: 'asset', fileName: `projects/${p.slug}/index.html`, source: renderProjectPage(p, data, opts) });
     }
+
+    // What a first visit to the homepage downloads, measured from this build, for the colophon.
+    const size = (label, source) => ({ label, raw: Buffer.byteLength(source), gzip: zlib.gzipSync(source).length });
+    const fonts = Object.values(bundle).filter((a) => /-latin-(wdth|400)-normal.*\.woff2$/.test(a.fileName));
+    const stats = { files: [
+      size('Page (HTML)', bundle['index.html']?.source ?? renderBody(data)),
+      ...cssFiles.map((f) => size('Stylesheet', bundle[f].source)),
+      size('Script', entry.code),
+      ...fonts.map((a) => ({ label: `Font: ${a.fileName.replace(/^assets\/|-latin.*$/g, '').replace(/-/g, ' ')}`, raw: a.source.length, gzip: a.source.length })),
+    ] };
+    this.emitFile({ type: 'asset', fileName: 'colophon/index.html', source: renderColophon(data, { ...opts, stats }) });
 
     const home = absolute(site, '/');
     const robots = live ? `User-agent: *\nAllow: /\nSitemap: ${home}sitemap.xml\n` : 'User-agent: *\nDisallow: /\n';
     this.emitFile({ type: 'asset', fileName: 'robots.txt', source: robots });
     if (live) {
-      const urls = [home, ...projects.map((p) => absolute(site, projectUrl(p)))];
+      const urls = [home, ...projects.map((p) => absolute(site, projectUrl(p))), absolute(site, '/colophon/')];
       const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${u}</loc></url>`).join('\n')}\n</urlset>\n`;
       this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: sitemap });
     }
@@ -104,7 +133,7 @@ function serveCms(req, res, next) {
 }
 
 export default defineConfig({
-  plugins: [content(), pages(), cloudflare()],
+  plugins: [content(), preload(), pages(), cloudflare()],
   environments: {
     client: { build: { rollupOptions: { input: { main: 'index.html', notFound: '404.html' } } } },
   },

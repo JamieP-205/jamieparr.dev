@@ -5,27 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Page not found · Jamie Parr</title>
   <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#111316" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#2947ec">
   <script src="/theme.js"></script>
-  <link rel="icon" href="/favicon.ico?v=2" sizes="16x16 32x32 48x48">
-  <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
+  <!--preload-->
+  <link rel="icon" href="/favicon.ico?v=4" sizes="16x16 32x32 48x48">
+  <link rel="icon" href="/favicon.svg?v=4" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4">
   <script type="module" src="/src/main.js"></script>
 </head>
 <body>
 <!--topbar-->
 <main id="main" tabindex="-1">
-  <section class="hero notfound">
-    <div class="hero__text">
-      <p class="status"><span class="status__led status__led--off" aria-hidden="true"></span>404 · not found</p>
-      <h1 class="hero__name">No page here.</h1>
-      <p class="hero__headline">That address doesn't exist on this site. It may have been mistyped, or I've moved something.</p>
-      <p class="hero__actions">
-        <a class="btn btn--solid" href="/">Back to the homepage</a>
-        <a class="btn" href="/#work">See my projects</a>
-      </p>
-    </div>
+  <section class="lost">
+    <h1 class="lost__code display" aria-label="404, page not found"><span class="rise"><span>404</span></span></h1>
+    <p>That address doesn't exist on this site. It may have been mistyped, or I've moved something.</p>
+    <p class="lost__actions">
+      <a class="btn btn--light" href="/">Back to the homepage</a>
+      <a class="link" href="/#work">See my projects</a>
+    </p>
   </section>
 </main>
 </body>

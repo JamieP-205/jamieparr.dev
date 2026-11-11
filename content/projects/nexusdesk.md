@@ -1,5 +1,6 @@
 ---
 title: "NexusDesk"
+short: "NexusDesk"
 summary: "A Java and SQL helpdesk with support tickets, equipment records and separate employee, technician and administrator accounts."
 tech: ["Java", "Spring Boot", "Spring Security", "SQL", "H2", "Thymeleaf"]
 links:
@@ -17,9 +18,16 @@ proof:
   - "96 automated tests, run on Java 17, 21 and 25"
   - "Separate employee, technician and administrator permissions with Spring Security"
   - "Try it in your browser, no account needed"
+context: "Practice project to my own brief"
+exhibit:
+  type: roles
+  caption: "Who can do what"
+  roles:
+    - { name: "Employee", can: ["Raises tickets and follows their history", "Confirms a fix or reopens with a reason", "Sees only their own tickets"] }
+    - { name: "Technician", can: ["Works the queue", "Takes ownership of a ticket", "Records what fixed it"] }
+    - { name: "Administrator", can: ["Everything a technician can", "Manages accounts", "Assigns and returns equipment"] }
 featured: true
 order: 2
-draft: false
 ---
 I wrote a brief for a fictional company's IT helpdesk. NexusDesk brings support requests, equipment records and staff accounts into one application. You can try it in your browser or download it, with 26 fictional tickets to explore.
 

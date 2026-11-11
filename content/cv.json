@@ -4,19 +4,33 @@
       "title": "BSc (Hons) Computing Technologies",
       "org": "Ulster University, Belfast",
       "dates": "2025 – 2029 (expected)",
-      "detail": "Includes a placement year in 2027/28. Year 2 covers Java, Python with Flask and SQLAlchemy, and an Agile team project in a team of five. Completed a year of Interactive Computing before transferring."
+      "detail": "Includes a placement year in 2027/28. Year 2 covers Java, Python with Flask and SQLAlchemy, and an Agile team project in a team of five. Completed a year of Interactive Computing before transferring.",
+      "start": "2025-09",
+      "end": "2029-06"
+    },
+    {
+      "title": "Interactive Computing, first year",
+      "org": "Ulster University, Belfast",
+      "dates": "2024 – 2025",
+      "detail": "The year before I transferred to Computing Technologies.",
+      "start": "2024-09",
+      "end": "2025-06"
     },
     {
       "title": "Level 3 Extended Diploma in Technology",
       "org": "Southern Regional College",
       "dates": "2022 – 2024",
-      "detail": "Grade D*DD."
+      "detail": "Grade D*DD.",
+      "start": "2022-09",
+      "end": "2024-06"
     },
     {
       "title": "IT Specialist: HTML and CSS",
       "org": "Certiport",
       "dates": "May 2023",
-      "detail": ""
+      "detail": "",
+      "start": "2023-05",
+      "end": "2023-05"
     }
   ],
   "work": [
@@ -30,25 +44,39 @@
       "title": "Temporary Production Operative",
       "org": "Saica Pack UK",
       "dates": "Jun – Sep 2026",
-      "detail": "Ran and monitored automated packaging machinery and dealt with routine faults safely."
+      "detail": "Ran and monitored automated packaging machinery and dealt with routine faults safely.",
+      "start": "2026-06",
+      "end": "2026-09"
     },
     {
       "title": "Warehouse Operative",
       "org": "Pet Connection",
       "dates": "Oct 2021 – Jul 2026",
-      "detail": "Prepared customer and Amazon orders for dispatch and kept stock organised, alongside my studies."
+      "detail": "Prepared customer and Amazon orders for dispatch and kept stock organised, alongside my studies.",
+      "start": "2021-10",
+      "end": "2026-07"
     },
     {
       "title": "Kitchen Porter",
       "org": "The Garden Room",
       "dates": "Aug 2024 – Jul 2026",
-      "detail": "Supported the kitchen team through busy services."
+      "detail": "Supported the kitchen team through busy services.",
+      "start": "2024-08",
+      "end": "2026-07"
     },
     {
       "title": "Floor Staff",
       "org": "No.7 Duke",
       "dates": "Jun – Sep 2022",
-      "detail": "Helped customers and prepared areas for events and service."
+      "detail": "Helped customers and prepared areas for events and service.",
+      "start": "2022-06",
+      "end": "2022-09"
     }
-  ]
+  ],
+  "placement": {
+    "label": "Placement year",
+    "note": "open",
+    "start": "2027-07",
+    "end": "2028-08"
+  }
 }
