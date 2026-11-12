@@ -32,3 +32,16 @@ test('security.txt has the two fields RFC 9116 requires, and has not expired', (
   const expires = new Date(txt.match(/^Expires: (\S+)$/m)[1]);
   assert.ok(expires > new Date(), 'security.txt has expired: set a new Expires date');
 });
+// Everything under /assets/ is content-hashed by the build, so it can be cached for good. The /* rule above still applies to it.
+test('hashed assets are cached for a year, and the security headers stay on the /* rule', () => {
+  const rules = {};
+  let current;
+  for (const line of headers.split(/\r?\n/)) {
+    if (/^\S/.test(line)) rules[(current = line.trim())] = '';
+    else if (current) rules[current] += `${line.trim()}\n`;
+  }
+  assert.match(rules['/assets/*'], /^Cache-Control: public, max-age=31536000, immutable$/m);
+  assert.doesNotMatch(rules['/assets/*'], /Content-Security-Policy/);
+  assert.match(rules['/*'], /Content-Security-Policy/);
+  assert.match(rules['/*'], /Strict-Transport-Security/);
+});
