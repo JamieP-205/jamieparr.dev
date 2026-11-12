@@ -13,7 +13,7 @@ imageAlt: "The Coast Internet Radio homepage: a large Listen live button beside 
 proof:
   - "Live at coastinternetradio.com, with a request board the presenter uses on air"
   - "Signed webhooks, CSRF tokens and a Content-Security-Policy on the request board"
-  - "47 site tests and 37 pytest tests"
+  - "53 site tests and 38 pytest tests"
 context: "For a radio station in Newry"
 exhibit:
   type: flow
@@ -35,7 +35,7 @@ Coast Internet Radio is a small station in Newry run by a family member, playing
 - Listen live is the biggest thing on the home page, all five pages are always on show on phones, and listeners can make the text bigger or switch to dark mode.
 - The station's stream and track information are only available over HTTP. Two Cloudflare Workers serve them over HTTPS so they play on the secure site.
 - An editor at `/admin/` where the presenter changes the words, photos, colours, home page layout, news and show times himself, with preview, publish and undo.
-- Plain HTML, CSS and JavaScript on Netlify. Sign-in, saving and publishing use Netlify Functions and Blobs, with a hashed password and a signed sign-in cookie. 47 tests run before each deploy, including checks that the page, the editor and the request form still agree.
+- Plain HTML, CSS and JavaScript on Netlify. Sign-in, saving and publishing use Netlify Functions and Blobs, with a hashed password and a signed sign-in cookie. 53 tests run before each deploy, including checks that the page, the editor and the request form still agree.
 
 I built the first version in May 2026 using online tutorials, my class notes and some help from AI tools, and rebuilt it in October 2026 with Claude Code assisting with the code. I worked out with the presenter what he needed, made the design decisions, tested each change on the live site and moved the domain over.
 
@@ -69,6 +69,6 @@ This silent, captioned recording follows a fictional request through the working
 
 **The improvement.** The demo originally added a randomly selected sample. It now lets visitors type their own fictional request and follow it through the board. The form keeps entered details after a validation error and opens the board at the new request. Codex assisted with implementing and checking this update. [Before-and-after notes and checks](https://github.com/JamieP-205/coast-requests/blob/main/docs/listener-walkthrough.md).
 
-**Testing and security.** 37 pytest tests cover the webhook signature, duplicate and unwanted submissions, sign-in, CSRF protection, marking requests played, escaping listeners' text, UK times, keeping each demo visitor's board private and the new listener form. Tests run on GitHub Actions. The form and board were also checked in a browser at desktop and phone widths. The password is stored only as a hash, every form has a CSRF token, and a Content-Security-Policy allows only the app's own files. The station's board is hosted on PythonAnywhere, and Claude Code assisted with the original code.
+**Testing and security.** 38 pytest tests cover the webhook signature, duplicate and unwanted submissions, sign-in, CSRF protection, marking requests played, escaping listeners' text, UK times, keeping each demo visitor's board private and the new listener form. Tests run on GitHub Actions. The form and board were also checked in a browser at desktop and phone widths. The password is stored only as a hash, every form has a CSRF token, and a Content-Security-Policy allows only the app's own files. The station's board is hosted on PythonAnywhere, and Claude Code assisted with the original code.
 
 **Next steps.** Pause sign-in after several wrong passwords, and add a "can't play this one" option with a reason.

@@ -40,4 +40,4 @@ Money uses decimal arithmetic, rounded to two places.
 - Weight must be positive and no more than 100 kg, or the equivalent in grams, pounds or ounces. Package count must be 1–15, customers must be at least 18, and delivery can't be before dispatch.
 - Editing any input invalidates the displayed invoice, so an out-of-date total can't be exported.
 - The login pauses for 30 seconds after three failed attempts.
-- 24 automated checks cover prices, discounts, weight conversions, age and date limits, login lockout, form layout, clear/restore and invoice updates. They run on GitHub Actions.
+- 26 automated checks cover prices, discounts, weight conversions, age and date limits, login lockout, form layout, clear/restore and invoice updates. They run on GitHub Actions.
