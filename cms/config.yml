@@ -3,7 +3,7 @@
 # in Chrome or Edge. Choose "Work with Local Repository", pick this folder, edit, then deploy.
 backend:
   name: github
-  repo: JamieP-205/jamie-parr-site
+  repo: JamieP-205/jamieparr.dev
   branch: main
 media_folder: public/uploads
 public_folder: /uploads

@@ -429,7 +429,7 @@ export function renderColophon({ site }, { assets = '', noindex = false, stats =
     <h2 id="security">Security</h2>
     <p>Each response carries these headers:</p>
     <ul>${headers.filter((l) => !l.startsWith('Content-Security-Policy:')).map((l) => `<li><code>${esc(l)}</code></li>`).join('')}</ul>
-    <p>The Content-Security-Policy allows no inline scripts or styles:</p>
+    <p>The Content-Security-Policy allows no inline styles and one inline script, pinned by hash:</p>
     <ul>${csp.map((d) => `<li><code>${esc(d)}</code></li>`).join('')}</ul>
     <p>The contact form checks the sender's origin and content type, caps the message size, limits each visitor to three messages a minute and only reports success once the email has been accepted. Security reports have an address in <a href="/.well-known/security.txt">security.txt</a>.</p>
     <h2 id="tests">Tests</h2>

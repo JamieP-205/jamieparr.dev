@@ -9,7 +9,7 @@ The site includes project demos, a downloadable CV, a contact form, light and da
 - HTML, CSS and JavaScript, with Vite generating every page at build time. No framework.
 - JSON and Markdown content files, with Sveltia CMS available locally.
 - Cloudflare Workers and static assets, with Email Routing for the contact form.
-- Security headers, including a Content-Security-Policy with no inline scripts or styles, in `public/_headers`.
+- Security headers, including a Content-Security-Policy with no inline styles and one hash-pinned inline script, in `public/_headers`.
 - Node's test runner for the contact form, display settings, skills list, Armagh chart, security headers and page weight.
 
 ## Run locally
@@ -43,7 +43,7 @@ npm test
 - `src/styles/`: one stylesheet per concern (`base`, `home`, `case`, `chart`, `motion`), ordered by cascade layers in `src/styles.css`.
 - `src/main.js` and `src/chart.js`: the contact form and the chart readout. `public/theme.js`: display settings.
 - `src/contact.mjs` and `src/worker.js`: validated, rate-limited contact form handling.
-- `tests/`: run with `npm test`. `site.test.mjs` checks the built site, so build first.
+- `tests/`: run with `npm test`. `site.test.mjs` builds the site itself, then checks the result.
 - `DESIGN.md`: the design direction and the reasons behind it.
 
 ## Deployment
