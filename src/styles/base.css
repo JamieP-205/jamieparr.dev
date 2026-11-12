@@ -141,6 +141,8 @@
 
   .proof { display: grid; gap: 0.6rem; }
   .access-note { margin-top: 0.9rem; font-size: var(--text-s); max-width: 34rem; opacity: 0.85; }
+  .demo-status { font-size: var(--text-s); font-weight: 620; max-width: 34rem; }
+  .demo-status:not(:empty) { margin-top: 0.9rem; }
   .crumbs { display: flex; flex-wrap: wrap; gap: 0.5rem; font-size: var(--text-s); margin-bottom: 1.5rem; }
 
   /* ---------- long-form text ---------- */

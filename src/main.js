@@ -2,6 +2,7 @@ import '@fontsource-variable/bricolage-grotesque/wdth.css';
 import '@fontsource/ibm-plex-mono/400.css';
 import './styles.css';
 import './chart.js';
+import './demo.js';
 
 // Only confirm success after the server has accepted the email for delivery.
 const form = document.getElementById('contact-form');

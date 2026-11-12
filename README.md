@@ -43,6 +43,7 @@ npm test
 - `src/styles/`: one stylesheet per concern (`base`, `home`, `case`, `chart`, `motion`), ordered by cascade layers in `src/styles.css`.
 - `src/main.js` and `src/chart.js`: the contact form and the chart readout. `public/theme.js`: display settings.
 - `src/contact.mjs` and `src/worker.js`: validated, rate-limited contact form handling.
+- `src/demos.mjs` and `src/demo.js`: the NexusDesk and Coast Requests demos sleep on free hosting. Opening any page here starts them, and they stay awake while the page is open.
 - `tests/`: run with `npm test`. `site.test.mjs` builds the site itself, then checks the result.
 - `DESIGN.md`: the design direction and the reasons behind it.
 
