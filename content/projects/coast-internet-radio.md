@@ -9,11 +9,11 @@ links:
   - { label: "Website code", url: "https://github.com/JamieP-205/coast-radio" }
   - { label: "Coast Requests code", url: "https://github.com/JamieP-205/coast-requests" }
 image: "/uploads/projects/coast-home.webp"
-imageAlt: "The Coast Internet Radio homepage, with a Listen live button and the song playing now with its album cover"
+imageAlt: "The Coast Internet Radio homepage: a large Listen live button beside a photo of the presenter at the microphone, with the song playing now and its album cover underneath"
 proof:
   - "Live at coastinternetradio.com, with a request board the presenter uses on air"
   - "Signed webhooks, CSRF tokens and a Content-Security-Policy on the request board"
-  - "24 site tests and 37 pytest tests"
+  - "47 site tests and 37 pytest tests"
 context: "For a radio station in Newry"
 exhibit:
   type: flow
@@ -31,12 +31,15 @@ Coast Internet Radio is a small station in Newry run by a family member, playing
 
 ### The website
 
-- A live player that keeps playing as you move between pages, and shows the song playing now with its album cover.
+- A live player that keeps playing as you move between pages, shows the song playing now with its album cover, and reconnects by itself if the connection drops.
+- Listen live is the biggest thing on the home page, all five pages are always on show on phones, and listeners can make the text bigger or switch to dark mode.
 - The station's stream and track information are only available over HTTP. Two Cloudflare Workers serve them over HTTPS so they play on the secure site.
 - An editor at `/admin/` where the presenter changes the words, photos, colours, home page layout, news and show times himself, with preview, publish and undo.
-- Plain HTML, CSS and JavaScript on Netlify. Sign-in, saving and publishing use Netlify Functions and Blobs, with a hashed password and a signed sign-in cookie. 24 tests run before each deploy.
+- Plain HTML, CSS and JavaScript on Netlify. Sign-in, saving and publishing use Netlify Functions and Blobs, with a hashed password and a signed sign-in cookie. 47 tests run before each deploy, including checks that the page, the editor and the request form still agree.
 
 I built the first version in May 2026 using online tutorials, my class notes and some help from AI tools, and rebuilt it in October 2026 with Claude Code assisting with the code. I worked out with the presenter what he needed, made the design decisions, tested each change on the live site and moved the domain over.
+
+In November 2026 the site was redesigned around the station's own logo and studio photo. Claude Code did the research, the design and the code for that redesign from my brief, and the presenter and I reviewed it before it went live.
 
 ### Coast Requests
 
