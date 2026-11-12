@@ -39,8 +39,6 @@ Coast Internet Radio is a small station in Newry run by a family member, playing
 
 I built the first version in May 2026 using online tutorials, my class notes and some help from AI tools, and rebuilt it in October 2026 with Claude Code assisting with the code. I worked out with the presenter what he needed, made the design decisions, tested each change on the live site and moved the domain over.
 
-In November 2026 the site was redesigned around the station's own logo and studio photo. Claude Code did the research, the design and the code for that redesign from my brief, and the presenter and I reviewed it before it went live.
-
 ### Coast Requests
 
 **The problem.** Song requests only arrived by email, so during a live show the presenter had to search his inbox to find them.
