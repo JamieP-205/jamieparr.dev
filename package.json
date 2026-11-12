@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node --test tests/*.test.mjs",
+    "predeploy": "npm test",
     "deploy": "cf deploy --mode live",
     "dev": "cf dev"
   },
