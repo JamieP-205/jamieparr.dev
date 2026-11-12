@@ -50,6 +50,4 @@ npm test
 
 `npm run deploy` publishes to the Cloudflare account and domains configured in `cloudflare.config.ts`. To run your own copy, change those settings, the contact recipient and allowed origins, and configure your own Email Routing destination. Contact delivery requires the Cloudflare bindings; local preview alone does not send email.
 
-`npm run deploy:staging` uses the same configured destination with indexing disabled. It is not a separate staging site.
-
 Personal photographs, CV content and project media belong to their respective owners. No reuse licence is granted by making this source public.

@@ -6,7 +6,7 @@ import zlib from 'node:zlib';
 import { loadContent, renderBody, renderProjectPage, renderColophon, analyticsTag, speculationTag, projectUrl, absolute, topbar } from './src/render.mjs';
 
 // Pre-renders every page from /content at build time, so visitors get plain HTML.
-// `live` is true for `cf deploy --mode live` (public) and false for staging (noindex).
+// `live` is true for `cf deploy --mode live` (public) and false for any other build (noindex).
 let live = false;
 
 const DEV_ASSETS = '<script type="module" src="/src/main.js"></script>';
