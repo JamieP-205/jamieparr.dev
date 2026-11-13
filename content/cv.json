@@ -4,9 +4,9 @@
       "title": "BSc (Hons) Computing Technologies",
       "org": "Ulster University, Belfast",
       "dates": "2025 – 2029 (expected)",
-      "detail": "Includes a placement year in 2027/28. Year 2 covers Java, Python with Flask and SQLAlchemy, and an Agile team project in a team of five. Completed a year of Interactive Computing before transferring.",
+      "detail": "Includes a placement year in 2027/28. Year 2 covers Java, Python with Flask and SQLAlchemy, and an Agile team project in a team of five. Studied Interactive Computing in 2024/25 before transferring.",
       "start": "2025-09",
-      "end": "2029-06"
+      "end": "2029-07"
     },
     {
       "title": "Interactive Computing, first year",
@@ -35,6 +35,13 @@
   ],
   "work": [
     {
+      "title": "Retail Assistant (Weekend Only)",
+      "org": "Primark, Belfast",
+      "dates": "Starts 14 November 2026",
+      "detail": "Part-time, fixed-term weekend role alongside university studies. Starting Saturday 14 November 2026.",
+      "start": "2026-11"
+    },
+    {
       "title": "IT Work Placement",
       "org": "Pet Connection, Newry",
       "dates": "2023/24 academic year",
@@ -43,18 +50,18 @@
     {
       "title": "Temporary Production Operative",
       "org": "Saica Pack UK",
-      "dates": "Jun – Sep 2026",
-      "detail": "Ran and monitored automated packaging machinery and dealt with routine faults safely.",
+      "dates": "Jun to Aug 2026",
+      "detail": "Temporary role from 29 June to 28 August 2026. Monitored packaging machinery, checked output quality and handled routine faults safely.",
       "start": "2026-06",
-      "end": "2026-09"
+      "end": "2026-08"
     },
     {
       "title": "Warehouse Operative",
       "org": "Pet Connection",
-      "dates": "Oct 2021 – Jul 2026",
+      "dates": "Oct 2021 to Jun 2026",
       "detail": "Prepared customer and Amazon orders for dispatch and kept stock organised, alongside my studies.",
       "start": "2021-10",
-      "end": "2026-07"
+      "end": "2026-06"
     },
     {
       "title": "Kitchen Porter",

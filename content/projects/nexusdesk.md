@@ -15,7 +15,7 @@ access: "No account needed: choose Employee, Technician or Administrator. Each v
 image: "/uploads/projects/nexusdesk-dashboard.png"
 imageAlt: "NexusDesk 0.2.0 dashboard showing ticket totals and workload charts using fictional demo records"
 proof:
-  - "96 automated tests, run on Java 17, 21 and 25"
+  - "Release 0.2.2: 96 tests on Java 17, 21 and 25"
   - "Separate employee, technician and administrator permissions with Spring Security"
   - "Try it in your browser, no account needed"
 context: "Practice project to my own brief"
