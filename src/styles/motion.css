@@ -1,4 +1,4 @@
-/* Motion is one system: two easings, arrivals of 400 to 700 ms and quick feedback (150 to 250 ms).
+/* Motion is one system: two easings, slow arrivals (900 to 1100 ms) and quick feedback (150 to 250 ms).
    It lives in four places: the homepage opening, a few scroll-linked reveals, hover and press, and page changes.
    Keyframes only say where a thing starts, so with motion off each element simply sits in its finished place.
    The two clip-path reveals also name their end, because a clip-path cannot be blended into `none`: without it they jump.
@@ -26,14 +26,14 @@
 
   /* ---------- homepage opening, once ---------- */
   /* The portrait is uncovered from the bottom while it settles; the name rises a word at a time; the rest follows. */
-  .hero__photo { animation: wipe 700ms var(--ease-in-out) both; }
-  .hero__photo img { --settle-from: 1.1; animation: settle 700ms var(--ease-out) both; }
-  .hero__line > span { animation: rise 600ms var(--ease-out) 60ms both; }
-  .hero__line + .hero__line > span { animation-delay: 120ms; }
-  .hero__copy > :not(.hero__name) { animation: fade-up 450ms var(--ease-out) 280ms both; }
+  .hero__photo { animation: wipe 1100ms var(--ease-in-out) both; }
+  .hero__photo img { --settle-from: 1.1; animation: settle 1100ms var(--ease-out) both; }
+  .hero__line > span { animation: rise 1000ms var(--ease-out) 150ms both; }
+  .hero__line + .hero__line > span { animation-delay: 240ms; }
+  .hero__copy > :not(.hero__name) { animation: fade-up 900ms var(--ease-out) 600ms both; }
   /* Project pages, the colophon and the 404 open the same way: the title rises, the rest follows. */
-  .rise > span { animation: rise 500ms var(--ease-out) both; }
-  .case__head > :not(.case__title, .crumbs), .lost > :not(.lost__code) { animation: fade-up 400ms var(--ease-out) 120ms both; }
+  .rise > span { animation: rise 1000ms var(--ease-out) 150ms both; }
+  .case__head > :not(.case__title, .crumbs), .lost > :not(.lost__code) { animation: fade-up 900ms var(--ease-out) 600ms both; }
 
   /* ---------- scroll ---------- */
   @supports (animation-timeline: view()) {
@@ -57,8 +57,8 @@
     .stage__img { --settle-from: 1.06; animation: settle var(--ease-out) both; animation-timeline: view(); animation-range: entry 0% cover 35%; }
 
     /* A project page's own screenshot sits near the top, so it opens on load instead. */
-    .case__stage .stage__frame { animation: unmask 600ms var(--ease-in-out) both; animation-timeline: auto; }
-    .case__stage .stage__img { animation: settle 600ms var(--ease-out) both; animation-timeline: auto; }
+    .case__stage .stage__frame { animation: unmask 1100ms var(--ease-in-out) 200ms both; animation-timeline: auto; }
+    .case__stage .stage__img { animation: settle 1100ms var(--ease-out) 200ms both; animation-timeline: auto; }
 
     /* The Coast flow's line is drawn as the figure scrolls in: across when wide, down when stacked. */
     .flow__steps::before { animation: draw-down var(--ease-out) both; animation-timeline: view(); animation-range: entry 20% cover 40%; }
@@ -78,9 +78,6 @@
   @keyframes lift { to { opacity: 0; translate: 0 -2%; } }
   ::view-transition-old(root) { animation: lift 320ms var(--ease-in-out) both; }
   ::view-transition-new(root) { animation: wipe 320ms var(--ease-in-out) both; }
-  /* Arriving from another page of this site, the curtain is the entrance: the opening animations don't play again
-     on top of it. theme.js sets `data-arrived` before the first paint. */
-  :root[data-arrived] :is(.hero__photo, .hero__photo img, .hero__line > span, .hero__copy > *, .rise > span, .case__head > *, .lost > *, .case__stage .stage__frame, .case__stage .stage__img) { animation: none; }
 
   /* ---------- off ---------- */
   @media (prefers-reduced-motion: reduce) {

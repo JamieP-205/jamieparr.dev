@@ -23,12 +23,12 @@ Bricolage Grotesque for everything, at four sizes (`--text-xl`, `-l`, `-m`, `-s`
 
 ## Motion
 
-Two easings, arrivals of about half a second and quick feedback (150 to 250 ms). It lives in four places:
+Two easings, slow arrivals (about a second) and quick feedback (150 to 250 ms). It lives in four places:
 
 1. **Opening.** The name or page title rises from behind its own edge and the picture is uncovered.
 2. **Scroll.** The paper sheet slides up over the pinned hero; screenshots are uncovered and section headings rise as they arrive; the Coast flow's line draws in.
 3. **Feedback.** Underlines grow from the left, buttons press in slightly.
-4. **Page to page.** A curtain: the old page lifts and fades while the new one is uncovered from the bottom. The top bar stays still. A page reached this way doesn't replay its opening.
+4. **Page to page.** A curtain: the old page lifts and fades while the new one is uncovered from the bottom. The top bar stays still.
 
 All of it is CSS, and all of it stops for `prefers-reduced-motion` or the site's own "Reduce motion" setting. With motion off every element simply sits in its finished place.
 

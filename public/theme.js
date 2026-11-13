@@ -68,6 +68,4 @@
     document.addEventListener('pointerdown', event => { if (!settings.contains(event.target)) close(false); });
     settings.addEventListener('focusout', event => { if (event.relatedTarget && !settings.contains(event.relatedTarget)) close(false); });
   });
-  // A page reached through the page transition skips its opening animations (motion.css).
-  window.addEventListener('pagereveal', event => { if (event.viewTransition) document.documentElement.dataset.arrived = 'true'; });
 })();
