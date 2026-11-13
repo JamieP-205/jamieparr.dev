@@ -190,7 +190,7 @@ function hero(site) {
   const role = `${site.headline.split('. ')[0]}, ${city(site)}.`;
   // Each word sits in its own clipped line so it can rise into view.
   const name = site.name.split(' ').map((w) => `<span class="hero__line"><span>${esc(w)}</span></span>`).join(' ');
-  return `<section class="hero" id="top">
+  return `<section class="hero">
   <div class="hero__inner">
     <picture class="hero__photo">
       <source type="image/webp" srcset="${esc(site.portrait)}-720.webp 720w, ${esc(site.portrait)}-1200.webp 1200w" sizes="(orientation: portrait) 100vw, (max-width: 46rem) 100vw, 62vw">

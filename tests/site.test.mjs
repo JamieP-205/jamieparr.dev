@@ -55,6 +55,14 @@ test('no internal link or file reference points at nothing', () => {
   }
 });
 
+// The hero is pinned while the page scrolls over it, so a link to it would scroll to wherever it is pinned, not to the top.
+test('the name in the top bar of the homepage leads to the top of the page, not to the pinned hero', () => {
+  const { html } = pages.find((p) => p.url === '/');
+  assert.match(html, /<a class="bar__name" href="#top">/);
+  assert.match(html, /<body id="top">/);
+  assert.doesNotMatch(html, /class="hero"[^>]*id=/);
+});
+
 test('nothing is loaded from another site except the visitor counter', () => {
   for (const { url, html } of pages) for (const [, host] of html.matchAll(/<(?:script|img|source|video|iframe|link rel="(?:stylesheet|preload|modulepreload|icon)")\b[^>]*\s(?:src|href|srcset)="https?:\/\/([^/"]+)/g)) {
     assert.equal(host, 'static.cloudflareinsights.com', `${url} loads from ${host}`);
